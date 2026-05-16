@@ -132,3 +132,103 @@
     @apply font-serif;
   }
 }
+
+@layer base {
+  body {
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: color-mix(in oklch, var(--primary) 22%, transparent);
+  }
+}
+
+@layer components {
+  .article-prose {
+    color: var(--foreground);
+    font-family: var(--font-serif), serif;
+    font-size: 1.08rem;
+    line-height: 1.75;
+  }
+
+  .article-prose > * + * {
+    margin-top: 1.35em;
+  }
+
+  .article-prose h1,
+  .article-prose h2,
+  .article-prose h3,
+  .article-prose h4 {
+    font-family: var(--font-geist-sans), sans-serif;
+    font-weight: 650;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-top: 2em;
+  }
+
+  .article-prose h1 { font-size: 2rem; }
+  .article-prose h2 { font-size: 1.55rem; }
+  .article-prose h3 { font-size: 1.25rem; }
+
+  .article-prose a {
+    color: var(--primary);
+    text-decoration: underline;
+    text-underline-offset: 0.18em;
+  }
+
+  .article-prose blockquote {
+    border-left: 3px solid var(--border);
+    color: var(--muted-foreground);
+    font-style: italic;
+    padding-left: 1rem;
+  }
+
+  .article-prose ul,
+  .article-prose ol {
+    padding-left: 1.4rem;
+  }
+
+  .article-prose li + li {
+    margin-top: 0.35rem;
+  }
+
+  .article-prose :not(pre) > code {
+    border-radius: 0.4rem;
+    background: var(--muted);
+    font-family: var(--font-geist-mono), monospace;
+    font-size: 0.88em;
+    padding: 0.15rem 0.35rem;
+  }
+
+  .article-prose pre {
+    overflow-x: auto;
+    border-radius: 1rem;
+    border: 1px solid var(--border);
+    background: var(--muted);
+    padding: 1rem;
+  }
+
+  .article-prose pre code {
+    font-family: var(--font-geist-mono), monospace;
+    font-size: 0.9rem;
+  }
+
+  .article-prose table {
+    width: 100%;
+    border-collapse: collapse;
+    display: block;
+    overflow-x: auto;
+  }
+
+  .article-prose th,
+  .article-prose td {
+    border: 1px solid var(--border);
+    padding: 0.65rem 0.8rem;
+    text-align: left;
+  }
+
+  .article-prose img {
+    border-radius: 1rem;
+    border: 1px solid var(--border);
+  }
+}
