@@ -182,8 +182,9 @@ function filterDemoPosts(options?: { tag?: string; query?: string; limit?: numbe
     posts = posts.filter((post) => post.tags.some((tag) => tag.slug === options.tag))
   }
 
-  if (options?.query) {
-    posts = posts.filter((post) => matchesSearch(post, options.query))
+  const searchQuery = options?.query
+  if (searchQuery) {
+    posts = posts.filter((post) => matchesSearch(post, searchQuery))
   }
 
   if (options?.limit) {

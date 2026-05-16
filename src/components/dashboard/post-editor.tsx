@@ -1,6 +1,6 @@
+/* eslint-disable react-hooks/incompatible-library */
 "use client"
 
-import { zodResolver } from "@hookform/resolvers/zod"
 import { Eye, Save } from "lucide-react"
 import { useTransition } from "react"
 import { useForm } from "react-hook-form"
@@ -13,6 +13,7 @@ import { Label } from "@/components/ui/label"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Textarea } from "@/components/ui/textarea"
 import { getSupabaseBrowserClient } from "@/lib/supabase/browser"
+import { zodFormResolver } from "@/lib/validations/resolver"
 import type { BlogPost } from "@/lib/types"
 import { postEditorSchema, type PostEditorValues } from "@/lib/validations/post"
 
@@ -20,7 +21,7 @@ export function PostEditor({ post }: { post?: BlogPost }) {
   const supabase = getSupabaseBrowserClient()
   const [isPending, startTransition] = useTransition()
   const form = useForm<PostEditorValues>({
-    resolver: zodResolver(postEditorSchema),
+    resolver: zodFormResolver(postEditorSchema),
     defaultValues: {
       title: post?.title ?? "",
       excerpt: post?.excerpt ?? "",

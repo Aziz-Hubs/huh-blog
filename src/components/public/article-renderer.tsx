@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Link from "next/link"
 import ReactMarkdown, { type Components } from "react-markdown"
 import rehypeSanitize from "rehype-sanitize"

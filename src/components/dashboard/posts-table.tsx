@@ -32,8 +32,8 @@ export function PostsTable({ posts }: { posts: BlogPost[] }) {
               <TableCell>{post.likeCount.toLocaleString()}</TableCell>
               <TableCell className="text-right">
                 <div className="flex justify-end gap-2">
-                  <Button render={<Link href={`/blog/${post.slug}`} />} variant="ghost" size="sm">Preview</Button>
-                  <Button render={<Link href={`/dashboard/posts/${post.id}/edit`} />} variant="outline" size="sm">Edit</Button>
+                  <Button render={<Link href={`/blog/${post.slug}`} />} nativeButton={false} variant="ghost" size="sm">Preview</Button>
+                  <Button render={<Link href={`/dashboard/posts/${post.id}/edit`} />} nativeButton={false} variant="outline" size="sm">Edit</Button>
                 </div>
               </TableCell>
             </TableRow>

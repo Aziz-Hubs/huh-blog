@@ -1,3 +1,4 @@
+import Link from "next/link"
 import { redirect } from "next/navigation"
 import { DashboardShell } from "@/components/dashboard/dashboard-shell"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
@@ -18,7 +19,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
           <AlertTitle>Not authorized</AlertTitle>
           <AlertDescription>
             This dashboard is only available to the claimed blog owner. Use the owner claim RPC after signing in, then return here.
-            <a href="/" className={`${buttonVariants({ variant: "outline" })} mt-5`}>Back home</a>
+            <Link href="/" className={`${buttonVariants({ variant: "outline" })} mt-5`}>Back home</Link>
           </AlertDescription>
         </Alert>
       </div>

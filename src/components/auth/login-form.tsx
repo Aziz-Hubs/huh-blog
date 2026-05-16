@@ -1,7 +1,6 @@
 "use client"
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { Github, Mail } from "lucide-react"
+import { Mail } from "lucide-react"
 import { useSearchParams } from "next/navigation"
 import { useTransition } from "react"
 import { useForm } from "react-hook-form"
@@ -12,6 +11,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import { getSupabaseBrowserClient } from "@/lib/supabase/browser"
+import { zodFormResolver } from "@/lib/validations/resolver"
 import { loginSchema } from "@/lib/validations/auth"
 import type { z } from "zod"
 
@@ -22,7 +22,7 @@ export function LoginForm() {
   const searchParams = useSearchParams()
   const redirectTo = searchParams.get("redirectTo") ?? "/dashboard"
   const [isPending, startTransition] = useTransition()
-  const form = useForm<LoginValues>({ resolver: zodResolver(loginSchema), defaultValues: { email: "", password: "" } })
+  const form = useForm<LoginValues>({ resolver: zodFormResolver(loginSchema), defaultValues: { email: "", password: "" } })
 
   function signInWithPassword(values: LoginValues) {
     startTransition(async () => {
@@ -97,7 +97,7 @@ export function LoginForm() {
         <CardDescription>Use email/password, magic link, or an enabled OAuth provider.</CardDescription>
       </CardHeader>
       <CardContent>
-        <form onSubmit={form.handleSubmit(signInWithPassword)} className="space-y-4">
+        <form noValidate onSubmit={form.handleSubmit(signInWithPassword)} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
             <Input id="email" type="email" autoComplete="email" {...form.register("email")} />
@@ -114,7 +114,7 @@ export function LoginForm() {
         </Button>
         <Separator className="my-5" />
         <div className="grid gap-2 sm:grid-cols-2">
-          <Button type="button" variant="outline" onClick={() => oauth("github")} disabled={isPending}><Github className="size-4" /> GitHub</Button>
+          <Button type="button" variant="outline" onClick={() => oauth("github")} disabled={isPending}>GitHub</Button>
           <Button type="button" variant="outline" onClick={() => oauth("google")} disabled={isPending}>Google</Button>
         </div>
       </CardContent>

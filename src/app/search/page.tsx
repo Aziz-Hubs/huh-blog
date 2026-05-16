@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import { Search } from "lucide-react"
+import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { PostList } from "@/components/public/post-list"
 import { getPublishedPosts } from "@/lib/db/posts"
@@ -25,6 +26,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
           <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
           <Input name="q" defaultValue={q} placeholder="Search published posts..." className="pl-9" aria-label="Search query" />
         </div>
+        <Button type="submit">Search</Button>
       </form>
       <div className="mt-8">
         {q.trim() ? <PostList posts={posts} /> : <p className="rounded-2xl border border-dashed p-6 text-sm text-muted-foreground">Enter a query to search published writing.</p>}

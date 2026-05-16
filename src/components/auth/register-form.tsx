@@ -1,6 +1,5 @@
 "use client"
 
-import { zodResolver } from "@hookform/resolvers/zod"
 import { useTransition } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
@@ -9,6 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { getSupabaseBrowserClient } from "@/lib/supabase/browser"
+import { zodFormResolver } from "@/lib/validations/resolver"
 import { registerSchema } from "@/lib/validations/auth"
 import type { z } from "zod"
 
@@ -17,7 +17,7 @@ type RegisterValues = z.infer<typeof registerSchema>
 export function RegisterForm() {
   const supabase = getSupabaseBrowserClient()
   const [isPending, startTransition] = useTransition()
-  const form = useForm<RegisterValues>({ resolver: zodResolver(registerSchema), defaultValues: { email: "", password: "", username: "", displayName: "" } })
+  const form = useForm<RegisterValues>({ resolver: zodFormResolver(registerSchema), defaultValues: { email: "", password: "", username: "", displayName: "" } })
 
   function submit(values: RegisterValues) {
     startTransition(async () => {
@@ -54,7 +54,7 @@ export function RegisterForm() {
         <CardDescription>Profiles are lightweight identities for comments and replies.</CardDescription>
       </CardHeader>
       <CardContent>
-        <form onSubmit={form.handleSubmit(submit)} className="space-y-4">
+        <form noValidate onSubmit={form.handleSubmit(submit)} className="space-y-4">
           <Field label="Email" id="email" error={form.formState.errors.email?.message}>
             <Input id="email" type="email" autoComplete="email" {...form.register("email")} />
           </Field>
