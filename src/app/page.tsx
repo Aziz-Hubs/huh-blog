@@ -23,13 +23,13 @@ export default async function HomePage() {
             <Boop rotation={-12} scale={1.14}>
               <span aria-hidden="true">✨</span>
             </Boop>
-            Tiny interactions, carefully kept
+            Serious notes, tiny wiggles
           </p>
           <h1 className="mt-4 max-w-3xl font-heading text-5xl font-semibold tracking-tight text-balance sm:text-6xl">
-            {siteConfig.name} is a warm, calm corner for technical notes and human writing.
+            {siteConfig.name} is a calm corner for technical notes, human writing, and the occasional tiny wobble.
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-8 text-muted-foreground">
-            Read polished essays, implementation notes, and thoughts with quiet little sparks: playful when useful, still when you need to focus.
+            Read polished essays, implementation notes, and thoughts with quiet little sparks. No algorithm, no confetti cannon, just a few well-behaved gremlins in the margins.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link href="/blog" className={cn(buttonVariants({ size: "lg" }), "animated-button")}>
@@ -54,7 +54,7 @@ export default async function HomePage() {
               <AnimatedEmoji emoji="🌙" label="moon" className="ambient-emoji" rotation={10} delay="900ms" />
             </div>
             <p className="text-sm leading-6 text-muted-foreground">
-              Built from the existing Supabase schema, with motion that behaves like a small wink: quick, reversible, and respectful of reduced-motion preferences.
+              Built from the existing Supabase schema, with motion that behaves like a small wink: quick, reversible, and absolutely not allowed to touch the nice furniture.
             </p>
           </CardContent>
         </Card>

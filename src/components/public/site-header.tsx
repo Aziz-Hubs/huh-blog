@@ -19,11 +19,8 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 border-b bg-background/88 backdrop-blur supports-[backdrop-filter]:bg-background/74">
       <div className="mx-auto flex h-16 w-full max-w-5xl items-center justify-between px-4 sm:px-6">
-        <Link href="/" className="flex items-center gap-2 font-heading text-lg font-semibold tracking-tight">
-          <span>{siteConfig.name}</span>
-          <Boop rotation={-10} scale={1.12} timing={210}>
-            <span aria-hidden="true">🌿</span>
-          </Boop>
+        <Link href="/" className="font-heading text-lg font-semibold tracking-tight">
+          {siteConfig.name}
         </Link>
         <nav aria-label="Main navigation" className="hidden items-center gap-1 md:flex">
           {navItems.map((item) => (
