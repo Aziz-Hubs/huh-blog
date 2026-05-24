@@ -2,6 +2,7 @@ import Link from "next/link"
 import { Menu, Rss } from "lucide-react"
 import { buttonVariants } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { Boop } from "@/components/shared/boop"
 import { ThemeToggle } from "@/components/shared/theme-toggle"
 import { UserMenu } from "@/components/shared/user-menu"
 import { siteConfig } from "@/lib/env"
@@ -16,21 +17,26 @@ const navItems = [
 
 export function SiteHeader() {
   return (
-    <header className="sticky top-0 z-40 border-b bg-background/85 backdrop-blur supports-[backdrop-filter]:bg-background/70">
+    <header className="sticky top-0 z-40 border-b bg-background/88 backdrop-blur supports-[backdrop-filter]:bg-background/74">
       <div className="mx-auto flex h-16 w-full max-w-5xl items-center justify-between px-4 sm:px-6">
-        <Link href="/" className="font-heading text-lg font-semibold tracking-tight">
-          {siteConfig.name}
+        <Link href="/" className="flex items-center gap-2 font-heading text-lg font-semibold tracking-tight">
+          <span>{siteConfig.name}</span>
+          <Boop rotation={-10} scale={1.12} timing={210}>
+            <span aria-hidden="true">🌿</span>
+          </Boop>
         </Link>
         <nav aria-label="Main navigation" className="hidden items-center gap-1 md:flex">
           {navItems.map((item) => (
-            <Link key={item.href} href={item.href} className={cn(buttonVariants({ variant: "ghost" }), "text-muted-foreground")}> 
+            <Link key={item.href} href={item.href} className={cn(buttonVariants({ variant: "ghost" }), "nav-link text-muted-foreground")}> 
               {item.label}
             </Link>
           ))}
         </nav>
         <div className="flex items-center gap-1">
           <Link href="/rss.xml" className={buttonVariants({ variant: "ghost", size: "icon" })} aria-label="RSS feed">
-            <Rss className="size-4" />
+            <Boop rotation={8} x={1} y={-1} scale={1.08}>
+              <Rss className="size-4" />
+            </Boop>
           </Link>
           <ThemeToggle />
           <UserMenu />

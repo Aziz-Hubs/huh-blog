@@ -3,6 +3,7 @@
 import { Monitor, Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
 import { Button } from "@/components/ui/button"
+import { Boop } from "@/components/shared/boop"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,8 +17,10 @@ export function ThemeToggle() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger render={<Button variant="ghost" size="icon" aria-label="Change theme" />}>
-        <Sun className="size-4 dark:hidden" />
-        <Moon className="hidden size-4 dark:block" />
+        <Boop rotation={12} scale={1.12}>
+          <Sun className="size-4 dark:hidden" />
+          <Moon className="hidden size-4 dark:block" />
+        </Boop>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem onClick={() => setTheme("light")}>

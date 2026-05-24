@@ -38,7 +38,7 @@ export function UserMenu() {
   }, [supabase])
 
   if (!state.email) {
-    return <Button render={<Link href="/login" />} nativeButton={false} variant="outline" className="hidden sm:inline-flex">Sign in</Button>
+    return <Button render={<Link href="/login" />} nativeButton={false} variant="outline" className="animated-button hidden sm:inline-flex">Sign in</Button>
   }
 
   async function signOut() {
