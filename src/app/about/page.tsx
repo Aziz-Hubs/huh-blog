@@ -19,7 +19,7 @@ export default function AboutPage() {
         </Avatar>
         <h1 className="mt-6 font-heading text-4xl font-semibold tracking-tight">A personal writing home</h1>
         <p className="mt-5 text-lg leading-8 text-muted-foreground">
-          This blog exists for technical notes, careful essays, and general thoughts that deserve a quieter place than a social feed. It is designed as a personal tool first: fast to write in, pleasant to read, and just unserious enough to stay human.
+          This blog exists for technical notes, careful essays, and general thoughts that deserve a quieter place than a social feed. It is designed as a personal tool first: fast to write in, pleasant to read, and simple to maintain.
         </p>
         <p className="mt-5 leading-8 text-muted-foreground">
           The application is wired to Supabase for auth, database rules, storage, comments, notifications, RSS, sitemap, and owner-only publishing workflows.
