@@ -3,7 +3,7 @@
 import { Switch as SwitchPrimitive } from "@base-ui/react/switch"
 
 import { cn } from "@/lib/utils"
-import { Wobble } from "./wobble"
+import Wobble from "./wobble"
 
 function Switch({
   className,

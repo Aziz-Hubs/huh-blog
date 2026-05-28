@@ -6,7 +6,7 @@ import { Toggle } from "@/components/ui/toggle"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Select, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Wobble } from "@/components/ui/wobble"
+import Wobble from "@/components/ui/wobble"
 
 export default function WobbleDemoPage() {
   const cards = [
