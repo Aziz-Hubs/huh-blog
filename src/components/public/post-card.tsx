@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
 import { ComicText } from "@/components/ui/comic-text"
+import { KineticText } from "@/components/ui/kinetic-text"
 import { formatDate } from "@/lib/format"
 import type { BlogPost } from "@/lib/types"
 
@@ -15,8 +16,8 @@ export function PostCard({ post, featured = false }: { post: BlogPost; featured?
         <span>{post.viewCount.toLocaleString()} views</span>
       </div>
       <h2 className={featured ? "mt-4 font-heading text-3xl font-semibold tracking-tight" : "mt-4 font-heading text-xl font-semibold tracking-tight"}>
-        <Link href={`/blog/${post.slug}`} className="outline-none group-hover:text-primary focus-visible:rounded focus-visible:ring-2 focus-visible:ring-ring">
-          {post.title}
+        <Link href={`/blog/${post.slug}`} className="outline-none group-hover:text-primary focus-visible:rounded focus-visible:ring-2 focus-visible:ring-ring block w-fit">
+          <KineticText text={post.title} as="span" className="font-heading" />
         </Link>
       </h2>
       {post.excerpt ? (

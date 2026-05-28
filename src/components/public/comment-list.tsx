@@ -2,6 +2,7 @@ import Link from "next/link"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
+import { KineticText } from "@/components/ui/kinetic-text"
 import { ArticleRenderer } from "@/components/public/article-renderer"
 import { CommentActions } from "@/components/public/comment-actions"
 import { timeAgo } from "@/lib/format"
@@ -62,8 +63,14 @@ function CommentAuthor({ comment }: { comment: BlogComment }) {
         <AvatarFallback>{author?.displayName?.slice(0, 1) ?? "?"}</AvatarFallback>
       </Avatar>
       <div>
-        <div className="flex items-center gap-2 text-sm font-medium">
-          {author ? <Link href={`/profile/${author.username}`}>{author.displayName}</Link> : <span>Deleted user</span>}
+        <div className="flex flex-wrap items-center gap-2 text-sm font-medium">
+          {author ? (
+            <Link href={`/profile/${author.username}`}>
+              <KineticText text={author.displayName} as="span" className="text-sm font-medium" />
+            </Link>
+          ) : (
+            <span>Deleted user</span>
+          )}
           {author?.isOwner ? <Badge variant="secondary">Owner</Badge> : null}
         </div>
         <p className="text-xs text-muted-foreground">{timeAgo(comment.createdAt)}</p>

@@ -4,6 +4,7 @@ import ReactMarkdown, { type Components } from "react-markdown"
 import rehypeSanitize from "rehype-sanitize"
 import remarkGfm from "remark-gfm"
 import { ComicText } from "@/components/ui/comic-text"
+import { KineticText } from "@/components/ui/kinetic-text"
 import { TextAnimate } from "@/components/ui/text-animate"
 import type { BlogPost } from "@/lib/types"
 
@@ -114,7 +115,7 @@ export function ArticleHeader({ post }: { post: BlogPost }) {
         ))}
       </div>
       <h1 className="mt-6 font-heading text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
-        {post.title}
+        <KineticText text={post.title} as="span" className="font-heading" />
       </h1>
       {post.excerpt ? (
         <p className="mt-5 text-xl leading-8 text-muted-foreground">{post.excerpt}</p>

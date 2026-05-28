@@ -259,7 +259,7 @@ export function DynamicIslandTOC({
 
             <div className="flex-1 overflow-y-auto overscroll-contain px-3 pb-4" data-lenis-prevent="true">
               <div className="flex flex-col gap-0.5">
-                {headings.map((h) => {
+                {headings.map((h, index) => {
                   const isActive = activeId === h.id
                   const isHovered = hoveredId === h.id
 
@@ -269,7 +269,7 @@ export function DynamicIslandTOC({
 
                   return (
                     <button
-                      key={h.id}
+                      key={`${h.id}-${index}`}
                       onMouseEnter={() => setHoveredId(h.id)}
                       onMouseLeave={() => setHoveredId(null)}
                       onClick={(e) => {
