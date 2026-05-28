@@ -3,6 +3,7 @@ import Link from "next/link"
 import ReactMarkdown, { type Components } from "react-markdown"
 import rehypeSanitize from "rehype-sanitize"
 import remarkGfm from "remark-gfm"
+import { ComicText } from "@/components/ui/comic-text"
 import { TextAnimate } from "@/components/ui/text-animate"
 import type { BlogPost } from "@/lib/types"
 
@@ -103,10 +104,12 @@ export function ArticleRenderer({ content }: { content: string }) {
 export function ArticleHeader({ post }: { post: BlogPost }) {
   return (
     <header className="mx-auto max-w-3xl pt-12 sm:pt-16">
-      <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+      <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
         {post.tags.map((tag) => (
-          <Link key={tag.slug} href={`/blog?tag=${tag.slug}`} className="rounded-full border px-3 py-1 text-xs hover:bg-muted">
-            {tag.name}
+          <Link key={tag.slug} href={`/blog?tag=${tag.slug}`} className="hover:opacity-85 transition-opacity">
+            <ComicText fontSize={0.8} className="rounded-md px-2 py-0.5 border shadow-sm">
+              {`#${tag.name}`}
+            </ComicText>
           </Link>
         ))}
       </div>

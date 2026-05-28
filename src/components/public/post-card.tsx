@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
+import { ComicText } from "@/components/ui/comic-text"
 import { formatDate } from "@/lib/format"
 import type { BlogPost } from "@/lib/types"
 
@@ -21,10 +22,12 @@ export function PostCard({ post, featured = false }: { post: BlogPost; featured?
       {post.excerpt ? (
         <p className="mt-3 max-w-2xl leading-7 text-muted-foreground">{post.excerpt}</p>
       ) : null}
-      <div className="mt-5 flex flex-wrap gap-2">
+      <div className="mt-5 flex flex-wrap gap-2.5 items-center">
         {post.tags.map((tag) => (
-          <Link key={tag.slug} href={`/blog?tag=${tag.slug}`} className="text-xs text-muted-foreground underline-offset-4 hover:text-foreground hover:underline">
-            #{tag.slug}
+          <Link key={tag.slug} href={`/blog?tag=${tag.slug}`} className="hover:opacity-85 transition-opacity">
+            <ComicText fontSize={0.75} className="rounded-md px-1.5 py-0.5 border shadow-sm">
+              {`#${tag.slug}`}
+            </ComicText>
           </Link>
         ))}
       </div>
