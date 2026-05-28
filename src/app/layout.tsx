@@ -4,6 +4,7 @@ import { Providers } from "@/components/providers"
 import { SiteFooter } from "@/components/public/site-footer"
 import { SiteHeader } from "@/components/public/site-header"
 import { ProgressiveBlur } from "@/components/ui/progressive-blur"
+import { NoiseTexture } from "@/components/ui/noise-texture"
 import { siteConfig } from "@/lib/env"
 import { cn } from "@/lib/utils"
 import "./globals.css"
@@ -45,8 +46,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       suppressHydrationWarning
       className={cn("h-full antialiased", geistSans.variable, geistMono.variable, notoSerif.variable)}
     >
-      <body className="min-h-full bg-background font-sans text-foreground">
+      <body className="min-h-full bg-background font-sans text-foreground relative">
         <Providers>
+          {/* Subtle global noise overlay with very low opacity to feel editorial but completely transparent */}
+          <div className="fixed inset-0 pointer-events-none z-[9999] opacity-[0.015] dark:opacity-[0.022]">
+            <NoiseTexture frequency={0.75} octaves={4} slope={0.12} noiseOpacity={0.4} />
+          </div>
           <div className="relative flex min-h-dvh flex-col pb-16">
             <SiteHeader />
             {/* Top progressive blur sticking right below the header */}
