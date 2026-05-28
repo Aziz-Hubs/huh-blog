@@ -26,15 +26,15 @@ export default async function HomePage() {
         <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_320px]">
           <div>
             <p className="font-mono text-xs uppercase tracking-[0.42em] text-muted-foreground">
-              Personal notes / technical traces / quiet signal
+              Programming / cybersecurity / AI / eventually
             </p>
             <h1 className="mt-8 max-w-4xl font-heading text-[clamp(4rem,13vw,10.5rem)] font-semibold leading-[0.82] tracking-[-0.075em] text-balance">
-              Huh,
+              Zee,
               <br />
-              kept simple.
+              probably debugging.
             </h1>
             <p className="mt-8 max-w-xl text-lg leading-8 text-muted-foreground sm:text-xl">
-              A small writing room for technical notes, personal essays, and half-lit ideas that are not trying to become a platform.
+              Notes from a productive procrastinator: code, security, AI, and the suspiciously long path between opening the editor and doing the thing.
             </p>
           </div>
 
@@ -43,11 +43,11 @@ export default async function HomePage() {
               Current posture
             </p>
             <p className="mt-4 font-heading text-2xl leading-snug">
-              Calm interface.
+              Writing code.
               <br />
-              Sharp writing.
+              Reading logs.
               <br />
-              No feed-shaped panic.
+              Avoiding the obvious task.
             </p>
             <div className="mt-8 flex flex-col gap-2">
               <Link href="/blog" className={cn(buttonVariants(), "w-fit")}>
@@ -67,7 +67,7 @@ export default async function HomePage() {
 
         <div className="mt-16 grid gap-4 border-t pt-6 md:grid-cols-[160px_minmax(0,1fr)_auto] md:items-start">
           <p className="font-mono text-xs uppercase tracking-[0.28em] text-muted-foreground">
-            Latest note
+            Latest delay
           </p>
           {latestPost ? (
             <>
@@ -94,7 +94,7 @@ export default async function HomePage() {
             <div className="md:col-span-2">
               <EmptyState
                 title="No notes published yet"
-                description={`When ${siteConfig.name} has a first published note, it will sit here quietly.`}
+                description={`When ${siteConfig.name} finally stops reorganizing the task list, the first note will sit here quietly.`}
               />
             </div>
           )}

@@ -56,8 +56,8 @@ export function getAdminSupabaseConfig() {
 }
 
 export const siteConfig = {
-  name: env.NEXT_PUBLIC_SITE_NAME ?? "Huh",
+  name: env.NEXT_PUBLIC_SITE_NAME ?? "Zee",
   url: env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   description:
-    "A calm personal blog for technical notes, essays, and thoughtful writing.",
+    "Zee writes about programming, cybersecurity, AI, and the noble art of almost starting sooner.",
 }

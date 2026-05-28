@@ -1,6 +1,6 @@
-# huh-blog
+# zee-blog
 
-A calm, personal, Supabase-backed blog built with Next.js App Router, TypeScript, Tailwind CSS, ShadCN UI, and Resend.
+A minimal, Supabase-backed blog for Zee: programming notes, cybersecurity thinking, AI experiments, and subtle procrastinator humor.
 
 ## Phased build plan
 

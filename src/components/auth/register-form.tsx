@@ -62,10 +62,10 @@ export function RegisterForm() {
             <Input id="password" type="password" autoComplete="new-password" {...form.register("password")} />
           </Field>
           <Field label="Username" id="username" error={form.formState.errors.username?.message}>
-            <Input id="username" autoComplete="username" placeholder="aziz" {...form.register("username")} />
+            <Input id="username" autoComplete="username" placeholder="zee" {...form.register("username")} />
           </Field>
           <Field label="Display name" id="displayName" error={form.formState.errors.displayName?.message}>
-            <Input id="displayName" placeholder="Aziz" {...form.register("displayName")} />
+            <Input id="displayName" placeholder="Zee" {...form.register("displayName")} />
           </Field>
           <Button type="submit" className="w-full" disabled={isPending}>{isPending ? "Creating..." : "Create account"}</Button>
         </form>

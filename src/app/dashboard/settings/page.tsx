@@ -22,7 +22,7 @@ export default function SettingsPage() {
       <Card>
         <CardHeader><CardTitle>Owner claim</CardTitle><CardDescription>Run once after creating the owner Supabase Auth account.</CardDescription></CardHeader>
         <CardContent>
-          <pre className="overflow-x-auto rounded-xl bg-muted p-4 text-xs"><code>{`await supabase.rpc("claim_blog_owner", {\n  p_username: "your_username",\n  p_display_name: "Your Name",\n})`}</code></pre>
+          <pre className="overflow-x-auto rounded-xl bg-muted p-4 text-xs"><code>{`await supabase.rpc("claim_blog_owner", {\n  p_username: "zee",\n  p_display_name: "Zee",\n})`}</code></pre>
           <p className="mt-4 text-sm text-muted-foreground">After this succeeds, dashboard access is verified with is_blog_owner() on every request.</p>
         </CardContent>
       </Card>

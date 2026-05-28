@@ -5,7 +5,7 @@ const paths = [
   "/",
   "/blog",
   "/search",
-  "/blog/building-software-that-still-feels-personal",
+  "/blog/i-automated-the-task-i-was-avoiding",
   "/login",
   "/register",
   "/dashboard",
@@ -38,11 +38,11 @@ for (const path of paths) {
   if (overflow) issues.push(`${path} has horizontal overflow`)
 
   if (path === "/search") {
-    await page.fill('input[name="q"]', "Supabase")
+    await page.fill('input[name="q"]', "AI")
     await page.click('button:has-text("Search")')
     await page.waitForLoadState("networkidle")
-    const hasResult = await page.getByText("Supabase as the quiet backend").count()
-    if (!hasResult) issues.push("/search did not show expected Supabase result")
+    const hasResult = await page.getByText("AI agents and the art of supervised laziness").count()
+    if (!hasResult) issues.push("/search did not show expected AI result")
   }
 
   if (path === "/login") {
@@ -65,7 +65,7 @@ for (const path of paths) {
     }
   }
 
-  if (path === "/blog/building-software-that-still-feels-personal") {
+  if (path === "/blog/i-automated-the-task-i-was-avoiding") {
     await page.fill("#comment", "A browser-filled test comment")
     await page.click('button:has-text("Post comment")')
     await page.waitForTimeout(500)

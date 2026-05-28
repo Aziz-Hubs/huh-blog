@@ -81,8 +81,8 @@ export function ProfileSettingsForm() {
         <CardHeader><CardTitle>Profile settings</CardTitle><CardDescription>Maintain the public identity shown beside comments.</CardDescription></CardHeader>
         <CardContent>
           <form ref={formRef} action={submit} className="space-y-4">
-            <div className="space-y-2"><Label>Username</Label><Input name="username" pattern="[a-z0-9_]+" placeholder="aziz" required /></div>
-            <div className="space-y-2"><Label>Display name</Label><Input name="displayName" placeholder="Aziz" required /></div>
+            <div className="space-y-2"><Label>Username</Label><Input name="username" pattern="[a-z0-9_]+" placeholder="zee" required /></div>
+            <div className="space-y-2"><Label>Display name</Label><Input name="displayName" placeholder="Zee" required /></div>
             <div className="space-y-2"><Label>Bio</Label><Textarea name="bio" maxLength={500} /></div>
             <div className="space-y-2"><Label>Website URL</Label><Input name="websiteUrl" type="url" placeholder="https://example.com" /></div>
             <div className="space-y-2"><Label>Existing avatar URL</Label><Input name="avatarUrl" type="url" /></div>

@@ -2,94 +2,133 @@ import type { BlogComment, BlogPost, BlogTag, DashboardMetrics, EmailOutboxItem,
 
 export const demoAuthor: PublicProfile = {
   id: "demo-owner",
-  username: "aziz",
-  displayName: "Aziz",
+  username: "zee",
+  displayName: "Zee",
   avatarUrl: null,
-  bio: "Writing technical notes, personal essays, and quiet observations from the edge of software work.",
+  bio: "Programmer, security tinkerer, AI watcher, and certified opener of too many tabs before doing the obvious thing.",
   websiteUrl: "https://example.com",
   isOwner: true,
 }
 
 export const demoTags: BlogTag[] = [
-  { id: "1", name: "Supabase", slug: "supabase", description: "Database, auth, storage, and edge patterns.", isPrimary: true },
-  { id: "2", name: "Next.js", slug: "nextjs", description: "App Router notes and interface architecture." },
-  { id: "3", name: "Writing", slug: "writing", description: "Personal reflections on writing and making." },
+  { id: "1", name: "Programming", slug: "programming", description: "Code notes, architecture detours, and bugs that waited patiently.", isPrimary: true },
+  { id: "2", name: "Cybersecurity", slug: "cybersecurity", description: "Threat models, defensive habits, and security notes without the movie soundtrack." },
+  { id: "3", name: "AI", slug: "ai", description: "Practical AI experiments, tooling, agents, and careful skepticism." },
 ]
 
 export const demoPosts: BlogPost[] = [
   {
     id: "post-1",
-    title: "Building software that still feels personal",
-    slug: "building-software-that-still-feels-personal",
-    excerpt: "A small note on keeping systems useful, humane, and quiet even when they gain powerful capabilities.",
-    content: `# Building software that still feels personal
+    title: "I automated the task I was avoiding",
+    slug: "i-automated-the-task-i-was-avoiding",
+    excerpt: "A programming note about turning procrastination into a small script, then pretending that was the plan all along.",
+    content: `# I automated the task I was avoiding
 
-The best tools I use do not keep announcing themselves. They make room for thought, then get out of the way.
+There are two ways to finish a boring task: do it immediately, or spend slightly too long building a tool that does it for you.
 
-This blog is built around that same constraint: publishing should be direct, reading should be calm, and community should stay lightweight.
+I will not be taking questions about which path I chose.
 
-## A working shape
+## The useful part
 
-- Posts are Markdown.
-- Comments are available, but not turned into a feed.
-- Search, RSS, and metadata are treated as durable infrastructure.
+The trick is to keep the detour honest. If the automation is smaller than the dread, ship it. If the automation becomes a second job, close the tab and do the thing manually like a citizen.
 
-> A personal site can be complete without becoming a product dashboard.
+- Name the repetitive step.
+- Script only the sharp edge.
+- Leave a README for future Zee, who will absolutely forget.
 
-\`quiet defaults\` are a feature, not a lack of ambition.
+> Procrastination is dangerous. Procrastination with tests is sometimes infrastructure.
+
+\`todo-later.ts\` is not a personality, but it does compile.
 
 \`\`\`ts
-export function publish(note: Draft) {
-  return note.status === "ready" ? "published" : "draft"
+export function shouldAutomate(minutesSaved: number, minutesToBuild: number) {
+  return minutesSaved * 3 > minutesToBuild ? "ship the tiny robot" : "do the task"
 }
 \`\`\`
 `,
     coverImageUrl: null,
-    coverImageAlt: "Abstract desk with notebook and laptop in soft morning light",
+    coverImageAlt: "A laptop with a terminal open beside a suspiciously untouched task list",
     coverImageCaption: null,
     publishedAt: new Date("2026-05-12T12:00:00Z").toISOString(),
     updatedAt: new Date("2026-05-14T18:00:00Z").toISOString(),
     status: "published",
-    seoTitle: "Building software that still feels personal",
-    seoDescription: "A calm note on building personal publishing software with modern infrastructure.",
+    seoTitle: "I automated the task I was avoiding",
+    seoDescription: "Zee writes about programming, procrastination, and the tiny scripts that make both less embarrassing.",
     ogImageUrl: null,
-    tags: [demoTags[2], demoTags[1]],
-    likeCount: 14,
-    bookmarkCount: 4,
-    viewCount: 428,
+    tags: [demoTags[0], demoTags[2]],
+    likeCount: 18,
+    bookmarkCount: 6,
+    viewCount: 512,
     author: demoAuthor,
   },
   {
     id: "post-2",
-    title: "Supabase as the quiet backend for a one-person blog",
-    slug: "supabase-as-the-quiet-backend",
-    excerpt: "Using database rules, views, storage, and RPCs as the product boundary instead of inventing a second content model.",
-    content: `# Supabase as the quiet backend
+    title: "Threat modeling my own bad habits",
+    slug: "threat-modeling-my-own-bad-habits",
+    excerpt: "A cybersecurity reflection on treating distraction, stale dependencies, and future-me as realistic adversaries.",
+    content: `# Threat modeling my own bad habits
 
-The database already knows most of the product rules. The app should respect that and avoid a parallel model.
+Security gets easier when I admit the attacker is not always a hoodie in a dark room. Sometimes the attacker is me, tired, overconfident, and saying, "I'll patch that after lunch."
 
-| Layer | Responsibility |
+Lunch has done a lot of damage in this industry.
+
+| Risk | Control |
 | --- | --- |
-| RLS | Authorization |
-| Views | Public read models |
-| RPCs | Intentful operations |
-| App | Experience and validation |
+| Stale dependencies | Scheduled updates, not vibes |
+| Secret sprawl | Environment boundaries and reviews |
+| Tired deploys | Checklists with fewer heroic assumptions |
+| Future me | Comments that explain the weird parts |
 
-That separation keeps the interface light while preserving safety.
+The goal is not paranoia. The goal is fewer avoidable surprises.
 `,
     coverImageUrl: null,
-    coverImageAlt: "Layered architecture sketch on paper",
+    coverImageAlt: "A quiet desk with a checklist, lock icon sketch, and coffee cup",
     coverImageCaption: null,
     publishedAt: new Date("2026-05-08T09:30:00Z").toISOString(),
     updatedAt: new Date("2026-05-08T09:30:00Z").toISOString(),
     status: "published",
-    seoTitle: null,
-    seoDescription: null,
+    seoTitle: "Threat modeling my own bad habits",
+    seoDescription: "A cybersecurity note from Zee about defensive habits and procrastination as an attack surface.",
     ogImageUrl: null,
-    tags: [demoTags[0], demoTags[1]],
-    likeCount: 22,
-    bookmarkCount: 7,
-    viewCount: 691,
+    tags: [demoTags[1], demoTags[0]],
+    likeCount: 26,
+    bookmarkCount: 9,
+    viewCount: 734,
+    author: demoAuthor,
+  },
+  {
+    id: "post-3",
+    title: "AI agents and the art of supervised laziness",
+    slug: "ai-agents-and-supervised-laziness",
+    excerpt: "A practical AI note on using agents like interns with root access denied and receipts required.",
+    content: `# AI agents and the art of supervised laziness
+
+I like AI tools most when they make me more deliberate, not when they let me disappear from the work entirely.
+
+An agent is useful when it can gather context, draft options, run checks, and show its receipts. It is less useful when it confidently invents a database table and then looks at me like I asked for drama.
+
+## My current rules
+
+1. Give the agent a narrow job.
+2. Ask for evidence, not enthusiasm.
+3. Keep secrets out of the prompt.
+4. Review the diff like it was written at 1:47 AM, because spiritually it was.
+
+AI can save time. It can also create a brand-new kind of chore. I am choosing the first one whenever possible.
+`,
+    coverImageUrl: null,
+    coverImageAlt: "A small robot sticker next to a code review checklist",
+    coverImageCaption: null,
+    publishedAt: new Date("2026-05-03T14:15:00Z").toISOString(),
+    updatedAt: new Date("2026-05-04T10:00:00Z").toISOString(),
+    status: "published",
+    seoTitle: "AI agents and supervised laziness",
+    seoDescription: "Zee writes about practical AI agents, code review, and productive procrastination.",
+    ogImageUrl: null,
+    tags: [demoTags[2], demoTags[0]],
+    likeCount: 31,
+    bookmarkCount: 12,
+    viewCount: 901,
     author: demoAuthor,
   },
 ]
@@ -99,16 +138,16 @@ export const demoComments: BlogComment[] = [
     id: "comment-1",
     postId: "post-1",
     parentId: null,
-    body: "This is exactly the kind of publishing tool I keep wanting: capable, but not loud.",
+    body: "I came for programming notes and stayed because 'ship the tiny robot' is now my sprint strategy.",
     createdAt: new Date("2026-05-13T15:12:00Z").toISOString(),
     updatedAt: null,
     deletedAt: null,
     likeCount: 3,
     author: {
       username: "reader",
-      displayName: "Thoughtful Reader",
+      displayName: "Reasonable Reader",
       avatarUrl: null,
-      bio: "Reads slowly.",
+      bio: "Reads the docs eventually.",
       websiteUrl: null,
     },
     replies: [
@@ -116,7 +155,7 @@ export const demoComments: BlogComment[] = [
         id: "comment-2",
         postId: "post-1",
         parentId: "comment-1",
-        body: "Same. The line between a blog and a dashboard gets blurry quickly.",
+        body: "A tiny robot with tests is basically project management, if you squint.",
         createdAt: new Date("2026-05-13T16:01:00Z").toISOString(),
         updatedAt: null,
         deletedAt: null,
@@ -129,11 +168,11 @@ export const demoComments: BlogComment[] = [
 ]
 
 export const demoMetrics: DashboardMetrics = {
-  totalPosts: 8,
-  drafts: 2,
+  totalPosts: 9,
+  drafts: 3,
   scheduled: 1,
   published: 5,
-  totalViews: 2458,
+  totalViews: 3147,
   recentComments: 4,
   failedEmails: 1,
 }
@@ -143,10 +182,10 @@ export const demoNotifications: NotificationItem[] = [
     id: "notification-1",
     type: "comment_reply",
     title: "New reply on your post",
-    body: "A reader replied to Building software that still feels personal.",
+    body: "A reader replied to I automated the task I was avoiding.",
     readAt: null,
     createdAt: new Date("2026-05-15T10:00:00Z").toISOString(),
-    href: "/blog/building-software-that-still-feels-personal#comments",
+    href: "/blog/i-automated-the-task-i-was-avoiding#comments",
   },
 ]
 
@@ -154,7 +193,7 @@ export const demoEmailOutbox: EmailOutboxItem[] = [
   {
     id: "email-1",
     to: "reader@example.com",
-    subject: "New reply on Huh",
+    subject: "New reply on Zee",
     status: "failed",
     attempts: 2,
     lastError: "Demo failure state for dashboard visibility",
