@@ -2,7 +2,7 @@ import Link from "next/link"
 import { Menu, Rss } from "lucide-react"
 import { buttonVariants } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { ThemeToggle } from "@/components/shared/theme-toggle"
+import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler"
 import { UserMenu } from "@/components/shared/user-menu"
 import { siteConfig } from "@/lib/env"
 import { cn } from "@/lib/utils"
@@ -32,7 +32,7 @@ export function SiteHeader() {
           <Link href="/rss.xml" className={buttonVariants({ variant: "ghost", size: "icon" })} aria-label="RSS feed">
             <Rss className="size-4" />
           </Link>
-          <ThemeToggle />
+          <AnimatedThemeToggler className={cn(buttonVariants({ variant: "ghost", size: "icon" }), "size-8")} />
           <UserMenu />
           <Sheet>
             <SheetTrigger className={cn(buttonVariants({ variant: "ghost", size: "icon" }), "md:hidden")} aria-label="Open menu">

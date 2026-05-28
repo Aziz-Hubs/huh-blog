@@ -2,7 +2,8 @@ import Link from "next/link"
 import { Bell, FileText, Image, Inbox, LayoutDashboard, MessageSquare, PenLine, Settings, Tags } from "lucide-react"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Badge } from "@/components/ui/badge"
-import { ThemeToggle } from "@/components/shared/theme-toggle"
+import { buttonVariants } from "@/components/ui/button"
+import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler"
 import { cn } from "@/lib/utils"
 
 const nav = [
@@ -26,7 +27,7 @@ export function DashboardShell({ children, setupMode = false }: { children: Reac
             <p className="text-sm font-medium">Owner dashboard</p>
             <p className="text-xs text-muted-foreground">Write and manage</p>
           </div>
-          <ThemeToggle />
+          <AnimatedThemeToggler className={cn(buttonVariants({ variant: "ghost", size: "icon" }), "size-8")} />
         </div>
         <nav className="grid gap-1" aria-label="Dashboard navigation">
           {nav.map((item) => (
