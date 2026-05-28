@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import Script from "next/script"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Lens } from "@/components/ui/lens"
 import { Separator } from "@/components/ui/separator"
 import { ArticleHeader, ArticleRenderer } from "@/components/public/article-renderer"
 import { CommentForm } from "@/components/public/comment-form"
@@ -74,7 +75,15 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         </figure>
       ) : null}
       <div className="mx-auto mt-10 max-w-3xl">
-        <ArticleRenderer content={post.content} />
+        <Lens
+          ariaLabel="Magnified article body"
+          className="outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          duration={0.18}
+          lensSize={210}
+          zoomFactor={1.18}
+        >
+          <ArticleRenderer content={post.content} />
+        </Lens>
       </div>
       <footer className="mx-auto mt-12 max-w-3xl space-y-8 pb-16">
         <ReactionButtons postId={post.id} likeCount={post.likeCount} />
