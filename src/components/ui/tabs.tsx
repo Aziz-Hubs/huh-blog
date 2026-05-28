@@ -4,6 +4,7 @@ import { Tabs as TabsPrimitive } from "@base-ui/react/tabs"
 import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
+import { Wobble } from "./wobble"
 
 function Tabs({
   className,
@@ -53,8 +54,8 @@ function TabsList({
   )
 }
 
-function TabsTrigger({ className, ...props }: TabsPrimitive.Tab.Props) {
-  return (
+function TabsTrigger({ className, wobble = true, ...props }: TabsPrimitive.Tab.Props & { wobble?: boolean }) {
+  const comp = (
     <TabsPrimitive.Tab
       data-slot="tabs-trigger"
       className={cn(
@@ -67,6 +68,12 @@ function TabsTrigger({ className, ...props }: TabsPrimitive.Tab.Props) {
       {...props}
     />
   )
+
+  if (wobble) {
+    return <Wobble>{comp}</Wobble>
+  }
+
+  return comp
 }
 
 function TabsContent({ className, ...props }: TabsPrimitive.Panel.Props) {

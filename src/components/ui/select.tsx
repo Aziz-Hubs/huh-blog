@@ -5,6 +5,7 @@ import { Select as SelectPrimitive } from "@base-ui/react/select"
 
 import { cn } from "@/lib/utils"
 import { ChevronDownIcon, CheckIcon, ChevronUpIcon } from "lucide-react"
+import { Wobble } from "./wobble"
 
 const Select = SelectPrimitive.Root
 
@@ -31,12 +32,14 @@ function SelectValue({ className, ...props }: SelectPrimitive.Value.Props) {
 function SelectTrigger({
   className,
   size = "default",
+  wobble = true,
   children,
   ...props
 }: SelectPrimitive.Trigger.Props & {
   size?: "sm" | "default"
+  wobble?: boolean
 }) {
-  return (
+  const comp = (
     <SelectPrimitive.Trigger
       data-slot="select-trigger"
       data-size={size}
@@ -54,6 +57,12 @@ function SelectTrigger({
       />
     </SelectPrimitive.Trigger>
   )
+
+  if (wobble) {
+    return <Wobble>{comp}</Wobble>
+  }
+
+  return comp
 }
 
 function SelectContent({

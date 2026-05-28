@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
+import { Wobble, type WobbleChildProps } from "./wobble"
 import {
   Sheet,
   SheetContent,
@@ -503,11 +504,13 @@ function SidebarMenuButton({
   size = "default",
   tooltip,
   className,
+  disableWobble = false,
   ...props
 }: useRender.ComponentProps<"button"> &
   React.ComponentProps<"button"> & {
     isActive?: boolean
     tooltip?: string | React.ComponentProps<typeof TooltipContent>
+    disableWobble?: boolean
   } & VariantProps<typeof sidebarMenuButtonVariants>) {
   const { isMobile, state } = useSidebar()
   const comp = useRender({
@@ -527,24 +530,20 @@ function SidebarMenuButton({
     },
   })
 
-  if (!tooltip) {
-    return comp
-  }
+  const wobbledComp = disableWobble ? comp : <Wobble>{(comp as unknown) as React.ReactElement<WobbleChildProps>}</Wobble>
 
-  if (typeof tooltip === "string") {
-    tooltip = {
-      children: tooltip,
-    }
+  if (!tooltip) {
+    return wobbledComp
   }
 
   return (
     <Tooltip>
-      {comp}
+      {wobbledComp}
       <TooltipContent
         side="right"
         align="center"
         hidden={state !== "collapsed" || isMobile}
-        {...tooltip}
+        {...(typeof tooltip === "string" ? { children: tooltip } : tooltip)}
       />
     </Tooltip>
   )

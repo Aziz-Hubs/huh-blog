@@ -7,6 +7,7 @@ import { type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
 import { toggleVariants } from "@/components/ui/toggle"
+import { Wobble } from "./wobble"
 
 const ToggleGroupContext = React.createContext<
   VariantProps<typeof toggleVariants> & {
@@ -61,11 +62,14 @@ function ToggleGroupItem({
   children,
   variant = "default",
   size = "default",
+  wobble = true,
   ...props
-}: TogglePrimitive.Props & VariantProps<typeof toggleVariants>) {
+}: TogglePrimitive.Props & VariantProps<typeof toggleVariants> & {
+  wobble?: boolean
+}) {
   const context = React.useContext(ToggleGroupContext)
 
-  return (
+  const comp = (
     <TogglePrimitive
       data-slot="toggle-group-item"
       data-variant={context.variant || variant}
@@ -84,6 +88,12 @@ function ToggleGroupItem({
       {children}
     </TogglePrimitive>
   )
+
+  if (wobble) {
+    return <Wobble>{comp}</Wobble>
+  }
+
+  return comp
 }
 
 export { ToggleGroup, ToggleGroupItem }

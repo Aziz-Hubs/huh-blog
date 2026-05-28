@@ -3,7 +3,27 @@ import Link from "next/link"
 import ReactMarkdown, { type Components } from "react-markdown"
 import rehypeSanitize from "rehype-sanitize"
 import remarkGfm from "remark-gfm"
+import { TextAnimate } from "@/components/ui/text-animate"
 import type { BlogPost } from "@/lib/types"
+
+// Helper: convert React children to a plain string for TextAnimate
+function childrenToString(children: React.ReactNode): string {
+  if (typeof children === "string") return children
+  if (typeof children === "number") return String(children)
+  if (Array.isArray(children)) return children.map(childrenToString).join("")
+  if (
+    typeof children === "object" &&
+    children !== null &&
+    "props" in children &&
+    typeof (children as { props?: { children?: React.ReactNode } }).props?.children !==
+      "undefined"
+  ) {
+    return childrenToString(
+      (children as { props: { children: React.ReactNode } }).props.children
+    )
+  }
+  return ""
+}
 
 const components: Components = {
   a: ({ href, children, ...props }) => {
@@ -15,6 +35,59 @@ const components: Components = {
     return <Link href={href}>{children}</Link>
   },
   img: ({ alt, ...props }) => <img alt={alt ?? "Post image"} loading="lazy" {...props} />,
+  p: ({ children }) => {
+    const text = childrenToString(children)
+    if (!text.trim()) return <p>{children}</p>
+    return (
+      <TextAnimate as="p" animation="fadeIn" by="word" once duration={0.5}>
+        {text}
+      </TextAnimate>
+    )
+  },
+  h1: ({ children }) => {
+    const text = childrenToString(children)
+    return (
+      <TextAnimate as="h1" animation="blurInUp" by="word" once duration={0.45}>
+        {text}
+      </TextAnimate>
+    )
+  },
+  h2: ({ children }) => {
+    const text = childrenToString(children)
+    return (
+      <TextAnimate as="h2" animation="blurInUp" by="word" once duration={0.45}>
+        {text}
+      </TextAnimate>
+    )
+  },
+  h3: ({ children }) => {
+    const text = childrenToString(children)
+    return (
+      <TextAnimate as="h3" animation="blurInUp" by="word" once duration={0.45}>
+        {text}
+      </TextAnimate>
+    )
+  },
+  li: ({ children }) => {
+    const text = childrenToString(children)
+    if (!text.trim()) return <li>{children}</li>
+    return (
+      <TextAnimate as="li" animation="fadeIn" by="word" once duration={0.45}>
+        {text}
+      </TextAnimate>
+    )
+  },
+  blockquote: ({ children }) => {
+    const text = childrenToString(children)
+    if (!text.trim()) return <blockquote>{children}</blockquote>
+    return (
+      <blockquote>
+        <TextAnimate as="p" animation="blurIn" by="word" once duration={0.55}>
+          {text}
+        </TextAnimate>
+      </blockquote>
+    )
+  },
 }
 
 export function ArticleRenderer({ content }: { content: string }) {
@@ -27,8 +100,6 @@ export function ArticleRenderer({ content }: { content: string }) {
   )
 }
 
-import { TextAnimate } from "@/components/ui/text-animate"
-
 export function ArticleHeader({ post }: { post: BlogPost }) {
   return (
     <header className="mx-auto max-w-3xl pt-12 sm:pt-16">
@@ -40,16 +111,10 @@ export function ArticleHeader({ post }: { post: BlogPost }) {
         ))}
       </div>
       <h1 className="mt-6 font-heading text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
-        <TextAnimate animation="blurInUp" by="word" once={true}>
-          {post.title}
-        </TextAnimate>
+        {post.title}
       </h1>
       {post.excerpt ? (
-        <div className="mt-5 text-xl leading-8 text-muted-foreground">
-          <TextAnimate animation="fadeIn" by="word" once={true} duration={0.4} delay={0.1}>
-            {post.excerpt}
-          </TextAnimate>
-        </div>
+        <p className="mt-5 text-xl leading-8 text-muted-foreground">{post.excerpt}</p>
       ) : null}
     </header>
   )
