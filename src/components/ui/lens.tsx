@@ -43,16 +43,23 @@ export function Lens({
   }
 
   const [isHovering, setIsHovering] = useState(false)
+  const [isSelecting, setIsSelecting] = useState(false)
   const [mousePosition, setMousePosition] = useState<Position>(position)
   const containerRef = useRef<HTMLDivElement>(null)
   const hideTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
-  // Clear timers on unmount
+  // Clear timers on unmount and listen to global mouseup for selection reset
   useEffect(() => {
+    const handleGlobalMouseUp = () => {
+      setIsSelecting(false)
+    }
+    window.addEventListener("mouseup", handleGlobalMouseUp)
+
     return () => {
       if (hideTimeoutRef.current) {
         clearTimeout(hideTimeoutRef.current)
       }
+      window.removeEventListener("mouseup", handleGlobalMouseUp)
     }
   }, [])
 
@@ -173,6 +180,7 @@ export function Lens({
       }}
       onKeyDown={handleKeyDown}
       onMouseEnter={handleMouseEnter}
+      onMouseDown={() => setIsSelecting(true)}
       onMouseLeave={() => {
         if (hideTimeoutRef.current) {
           clearTimeout(hideTimeoutRef.current)
@@ -190,7 +198,7 @@ export function Lens({
         lensContent
       ) : (
         <AnimatePresence mode="popLayout">
-          {isHovering && lensContent}
+          {isHovering && !isSelecting && lensContent}
         </AnimatePresence>
       )}
     </div>

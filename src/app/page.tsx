@@ -27,9 +27,6 @@ export default async function HomePage() {
       <section className="mx-auto grid min-h-[calc(100dvh-8rem)] w-full max-w-6xl grid-rows-[1fr_auto] px-4 py-12 sm:px-6 sm:py-16">
         <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_320px]">
           <div>
-            <p className="font-mono text-xs uppercase tracking-[0.42em] text-muted-foreground">
-              Programming / cybersecurity / AI / eventually
-            </p>
             <h1 className="mt-8 max-w-4xl font-heading text-[clamp(4rem,13vw,10.5rem)] font-semibold leading-[0.82] tracking-[-0.075em] text-balance">
               Zee,
               <br />
