@@ -43,7 +43,7 @@ const components: Components = {
     const text = childrenToString(children)
     if (!text.trim()) return <p>{children}</p>
     return (
-      <TextAnimate as="p" animation="fadeIn" by="word" once duration={0.5}>
+      <TextAnimate as="p" animation="fadeIn" by="word" once startOnView={false} duration={0.5}>
         {text}
       </TextAnimate>
     )
@@ -51,7 +51,7 @@ const components: Components = {
   h1: ({ children }) => {
     const text = childrenToString(children)
     return (
-      <TextAnimate as="h1" animation="blurInUp" by="word" once duration={0.45}>
+      <TextAnimate as="h1" animation="blurInUp" by="word" once startOnView={false} duration={0.45}>
         {text}
       </TextAnimate>
     )
@@ -59,7 +59,7 @@ const components: Components = {
   h2: ({ children }) => {
     const text = childrenToString(children)
     return (
-      <TextAnimate as="h2" animation="blurInUp" by="word" once duration={0.45}>
+      <TextAnimate as="h2" animation="blurInUp" by="word" once startOnView={false} duration={0.45}>
         {text}
       </TextAnimate>
     )
@@ -67,7 +67,7 @@ const components: Components = {
   h3: ({ children }) => {
     const text = childrenToString(children)
     return (
-      <TextAnimate as="h3" animation="blurInUp" by="word" once duration={0.45}>
+      <TextAnimate as="h3" animation="blurInUp" by="word" once startOnView={false} duration={0.45}>
         {text}
       </TextAnimate>
     )
@@ -76,7 +76,7 @@ const components: Components = {
     const text = childrenToString(children)
     if (!text.trim()) return <li>{children}</li>
     return (
-      <TextAnimate as="li" animation="fadeIn" by="word" once duration={0.45}>
+      <TextAnimate as="li" animation="fadeIn" by="word" once startOnView={false} duration={0.45}>
         {text}
       </TextAnimate>
     )
@@ -86,7 +86,7 @@ const components: Components = {
     if (!text.trim()) return <blockquote>{children}</blockquote>
     return (
       <blockquote>
-        <TextAnimate as="p" animation="blurIn" by="word" once duration={0.55}>
+        <TextAnimate as="p" animation="blurIn" by="word" once startOnView={false} duration={0.55}>
           {text}
         </TextAnimate>
       </blockquote>
@@ -105,6 +105,7 @@ export function ArticleRenderer({ content }: { content: string }) {
 }
 
 // Simple deterministic hash helper to avoid SSR/hydration mismatches while keeping it looking organic
+// Returns distinct cartoonish colors, tilt rotation, and bounding offsets
 function getTagStickerStyles(name: string, index: number) {
   let hash = 0
   for (let i = 0; i < name.length; i++) {
@@ -116,10 +117,25 @@ function getTagStickerStyles(name: string, index: number) {
   const seedY = Math.abs((hash + index * 47) % 20) // 0px to 20px vertical offset
   const rotation = ((hash + index * 17) % 24) - 12 // -12 to 12 deg tilt
 
+  // Distinct comic book color palette
+  const palettes = [
+    { bg: "#FACC15", dot: "#EF4444" }, // Yellow / Red
+    { bg: "#38BDF8", dot: "#1D4ED8" }, // Blue / Dark Blue
+    { bg: "#F472B6", dot: "#BE185D" }, // Pink / Dark Pink
+    { bg: "#4ADE80", dot: "#15803D" }, // Green / Dark Green
+    { bg: "#FB923C", dot: "#C2410C" }, // Orange / Dark Orange
+    { bg: "#C084FC", dot: "#6D28D9" }, // Purple / Dark Purple
+  ]
+  const color = palettes[Math.abs(hash) % palettes.length]
+
   return {
-    right: `${seedX}%`,
-    top: `${seedY}px`,
-    transform: `rotate(${rotation}deg)`,
+    style: {
+      right: `${seedX}%`,
+      top: `${seedY}px`,
+      transform: `rotate(${rotation}deg)`,
+    },
+    bg: color.bg,
+    dot: color.dot,
   }
 }
 
@@ -129,18 +145,31 @@ export function ArticleHeader({ post }: { post: BlogPost }) {
       {/* Cartoon Sticker Board Layer */}
       <div className="absolute right-0 top-0 h-16 w-1/2 hidden md:block">
         {post.tags.map((tag, index) => {
-          const stickerStyles = getTagStickerStyles(tag.name, index)
+          const sticker = getTagStickerStyles(tag.name, index)
           return (
             <div
               key={tag.slug}
               className="absolute select-none pointer-events-auto transition-transform hover:scale-105 hover:z-20 active:scale-95"
-              style={stickerStyles}
+              style={sticker.style}
             >
               <Wobble scale={1.04}>
                 <Link href={`/blog?tag=${tag.slug}`} className="block">
-                  {/* Thick white border outline mimicking cut vinyl stickers */}
-                  <div className="bg-background border-4 border-black rounded-2xl p-2 py-1 shadow-[4px_4px_0px_#000000] hover:shadow-[6px_6px_0px_#000000] active:shadow-[2px_2px_0px_#000000] transition-shadow">
-                    <ComicText fontSize={1.1} className="leading-none">
+                  {/* Thick solid border-less cartoon badge mimicking die-cut vinyl stickers */}
+                  <div 
+                    className="rounded-2xl p-2.5 py-1.5 shadow-[4px_4px_0px_#000000] hover:shadow-[6px_6px_0px_#000000] active:shadow-[2px_2px_0px_#000000] transition-shadow"
+                    style={{ backgroundColor: sticker.bg }}
+                  >
+                    <ComicText 
+                      fontSize={1.1} 
+                      className="leading-none"
+                      style={{
+                        backgroundColor: sticker.bg,
+                        backgroundImage: `radial-gradient(circle at 1px 1px, ${sticker.dot} 1px, transparent 0)`,
+                        textShadow: "none",
+                        filter: "drop-shadow(2px 2px 0px #000000)",
+                        WebkitTextStroke: "0.33px #000000",
+                      }}
+                    >
                       {tag.name}
                     </ComicText>
                   </div>
@@ -153,15 +182,31 @@ export function ArticleHeader({ post }: { post: BlogPost }) {
 
       {/* Mobile/Small Screen Fallback (inline comic-tags inline grid row) */}
       <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground md:hidden mb-6">
-        {post.tags.map((tag) => (
-          <Link key={tag.slug} href={`/blog?tag=${tag.slug}`} className="hover:opacity-85 transition-opacity">
-            <div className="bg-background border-2 border-black rounded-xl px-2 py-0.5 shadow-[2px_2px_0px_#000000]">
-              <ComicText fontSize={0.7} className="leading-none">
-                {tag.name}
-              </ComicText>
-            </div>
-          </Link>
-        ))}
+        {post.tags.map((tag, index) => {
+          const sticker = getTagStickerStyles(tag.name, index)
+          return (
+            <Link key={tag.slug} href={`/blog?tag=${tag.slug}`} className="hover:opacity-85 transition-opacity">
+              <div 
+                className="rounded-xl px-2 py-1 shadow-[2px_2px_0px_#000000]"
+                style={{ backgroundColor: sticker.bg }}
+              >
+                <ComicText 
+                  fontSize={0.7} 
+                  className="leading-none"
+                  style={{
+                    backgroundColor: sticker.bg,
+                    backgroundImage: `radial-gradient(circle at 1px 1px, ${sticker.dot} 1px, transparent 0)`,
+                    textShadow: "none",
+                    filter: "drop-shadow(1px 1px 0px #000000)",
+                    WebkitTextStroke: "0.2px #000000",
+                  }}
+                >
+                  {tag.name}
+                </ComicText>
+              </div>
+            </Link>
+          )
+        })}
       </div>
 
       <h1 className="mt-4 font-heading text-4xl font-semibold tracking-tight text-balance sm:text-5xl">

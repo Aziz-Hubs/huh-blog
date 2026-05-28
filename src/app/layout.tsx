@@ -48,9 +48,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     >
       <body className="min-h-full bg-background font-sans text-foreground relative">
         <Providers>
-          {/* Subtle global noise overlay with very low opacity to feel editorial but completely transparent */}
-          <div className="fixed inset-0 pointer-events-none z-[9999] opacity-[0.015] dark:opacity-[0.022]">
-            <NoiseTexture frequency={0.75} octaves={4} slope={0.12} noiseOpacity={0.4} />
+          {/* Global noise overlay with increased contrast (slope) and beautiful, elegant visibility */}
+          <div className="fixed inset-0 pointer-events-none z-[9999] opacity-[0.045] dark:opacity-[0.075]">
+            <NoiseTexture frequency={0.72} octaves={4} slope={0.24} noiseOpacity={0.5} />
           </div>
           <div className="relative flex min-h-dvh flex-col pb-16">
             <SiteHeader />

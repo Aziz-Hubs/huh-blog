@@ -144,8 +144,24 @@ export function DynamicIslandTOC({
 
       setActiveId(currentActiveId)
 
-      const total = document.documentElement.scrollHeight - window.innerHeight
-      setProgress(total > 0 ? Math.min(100, Math.max(0, (window.scrollY / total) * 100)) : 0)
+      // Calculate progress relative to the article content area instead of the full page height
+      // This guarantees the progress ring reaches 100% exactly when they finish reading, right before comments.
+      const articleEl = document.querySelector(".article-prose")
+      if (articleEl) {
+        const rect = articleEl.getBoundingClientRect()
+        const articleHeight = rect.height
+        // The distance from the top of the article container to the top of the viewport
+        const scrolledDistance = Math.max(0, -rect.top)
+        // Adjust the viewport height so it hits 100% when reaching the very end of the text
+        const maxScrollable = articleHeight - window.innerHeight * 0.4
+        const percentage = maxScrollable > 0 
+          ? Math.min(100, Math.max(0, (scrolledDistance / maxScrollable) * 100))
+          : 0
+        setProgress(percentage)
+      } else {
+        const total = document.documentElement.scrollHeight - window.innerHeight
+        setProgress(total > 0 ? Math.min(100, Math.max(0, (window.scrollY / total) * 100)) : 0)
+      }
     }
 
     window.addEventListener("scroll", handleScroll, { passive: true })
