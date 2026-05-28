@@ -2,9 +2,9 @@
 
 import { useState, useTransition } from "react"
 import { toast } from "sonner"
-import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
+import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button"
 import { getSupabaseBrowserClient } from "@/lib/supabase/browser"
 
 export function CommentForm({ postId }: { postId: string }) {
@@ -54,7 +54,9 @@ export function CommentForm({ postId }: { postId: string }) {
       />
       <div className="mt-3 flex items-center justify-between gap-3">
         <p className="text-xs text-muted-foreground">Markdown is supported. Replies stay one level deep.</p>
-        <Button onClick={submit} disabled={isPending}>{isPending ? "Posting..." : "Post comment"}</Button>
+        <InteractiveHoverButton onClick={submit} disabled={isPending}>
+          {isPending ? "Posting..." : "Post comment"}
+        </InteractiveHoverButton>
       </div>
     </div>
   )
