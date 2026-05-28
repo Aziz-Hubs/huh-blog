@@ -4,6 +4,7 @@ import { notFound } from "next/navigation"
 import Script from "next/script"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Lens } from "@/components/ui/lens"
+import { DynamicIslandTOC } from "@/components/ui/dynamic-island-toc"
 import { Separator } from "@/components/ui/separator"
 import { ArticleHeader, ArticleRenderer } from "@/components/public/article-renderer"
 import { CommentForm } from "@/components/public/comment-form"
@@ -61,7 +62,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   }
 
   return (
-    <article className="px-4 sm:px-6">
+    <article className="px-4 sm:px-6 relative">
+      <DynamicIslandTOC />
       <ArticleHeader post={post} />
       <div className="mx-auto mt-8 flex max-w-3xl flex-wrap items-center gap-4 text-sm text-muted-foreground">
         <span>Published {formatDate(post.publishedAt)}</span>

@@ -28,13 +28,25 @@ There are two ways to finish a boring task: do it immediately, or spend slightly
 
 I will not be taking questions about which path I chose.
 
-## The useful part
+## The useful part of detour
 
 The trick is to keep the detour honest. If the automation is smaller than the dread, ship it. If the automation becomes a second job, close the tab and do the thing manually like a citizen.
 
-- Name the repetitive step.
-- Script only the sharp edge.
-- Leave a README for future Zee, who will absolutely forget.
+### Sizing up the repetitive step
+
+Before writing code, measure how long the task actually takes. If it's a 10-second button click that happens twice a week, writing a Kubernetes operator for it might be overkill.
+
+- Name the repetitive step clearly.
+- Script only the sharp edge, not the full pipeline.
+- Leave a README for future Zee, who will absolutely forget why this exists.
+
+#### Why we forget our own scripts
+
+In six months, you will look at your bash script like it was written by an ancient civilization. Document the environment variables, or suffer the manual re-work.
+
+### Selecting the toolset
+
+Keep it light. Bash, TypeScript (via tsx), or Python are fine. Avoid pulling in heavy frameworks for scripts under 100 lines.
 
 > Procrastination is dangerous. Procrastination with tests is sometimes infrastructure.
 
@@ -45,6 +57,10 @@ export function shouldAutomate(minutesSaved: number, minutesToBuild: number) {
   return minutesSaved * 3 > minutesToBuild ? "ship the tiny robot" : "do the task"
 }
 \`\`\`
+
+## Measuring the outcome
+
+If you spent three hours to automate a five-minute task, you didn't fail. You gained valuable research. Just don't log it on the sprint board under 'Productivity'.
 `,
     coverImageUrl: null,
     coverImageAlt: "A laptop with a terminal open beside a suspiciously untouched task list",
@@ -72,6 +88,22 @@ Security gets easier when I admit the attacker is not always a hoodie in a dark 
 
 Lunch has done a lot of damage in this industry.
 
+## Finding the real adversaries
+
+In my personal workflow, there are three primary threat actors. None of them are nation-states, but all of them are highly effective.
+
+### Actor 1: Future-me
+
+Future-me is lazy, has no memory of today's context, and will happily bypass a security check if they are in a rush. I must protect future-me from their own impatience.
+
+### Actor 2: Stale dependencies
+
+Dependencies decay in the dark. A package that is secure today might have a CVE published tomorrow while I'm ignoring my dashboard alerts.
+
+#### Automating dependency checks
+
+Set up automated security PRs, but don't auto-merge them without at least running the test suite on a green branch first.
+
 | Risk | Control |
 | --- | --- |
 | Stale dependencies | Scheduled updates, not vibes |
@@ -79,7 +111,9 @@ Lunch has done a lot of damage in this industry.
 | Tired deploys | Checklists with fewer heroic assumptions |
 | Future me | Comments that explain the weird parts |
 
-The goal is not paranoia. The goal is fewer avoidable surprises.
+## Building reasonable controls
+
+The goal is not paranoia. The goal is fewer avoidable surprises. Focus on high-probability, high-impact risks first, like hardcoded API keys.
 `,
     coverImageUrl: null,
     coverImageAlt: "A quiet desk with a checklist, lock icon sketch, and coffee cup",
@@ -107,7 +141,23 @@ I like AI tools most when they make me more deliberate, not when they let me dis
 
 An agent is useful when it can gather context, draft options, run checks, and show its receipts. It is less useful when it confidently invents a database table and then looks at me like I asked for drama.
 
-## My current rules
+## Setting up boundaries
+
+Treating AI agents like junior developers who have massive enthusiasm but zero historic context is a healthy mental model.
+
+### Boundary 1: Root access denied
+
+Never let an autonomous agent push code directly to production or write directly to the database without a human review step. If it cannot explain what it did, reject the PR.
+
+### Boundary 2: Prompt safety
+
+Keep sensitive API keys, customer names, and proprietary configurations out of the context window. Use placeholder keys during local generation tasks.
+
+#### Sanitizing local workflows
+
+Set up a pre-commit hook that checks for secrets before you accidentally send your entire environmental config to a public LLM API.
+
+## Supervised laziness rules
 
 1. Give the agent a narrow job.
 2. Ask for evidence, not enthusiasm.
