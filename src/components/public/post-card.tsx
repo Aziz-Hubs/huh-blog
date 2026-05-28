@@ -1,7 +1,10 @@
+"use client"
+
 import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
 import { ComicText } from "@/components/ui/comic-text"
 import { KineticText } from "@/components/ui/kinetic-text"
+import { Wobble } from "@/components/ui/wobble"
 import { formatDate } from "@/lib/format"
 import type { BlogPost } from "@/lib/types"
 
@@ -16,20 +19,24 @@ export function PostCard({ post, featured = false }: { post: BlogPost; featured?
         <span>{post.viewCount.toLocaleString()} views</span>
       </div>
       <h2 className={featured ? "mt-4 font-heading text-3xl font-semibold tracking-tight" : "mt-4 font-heading text-xl font-semibold tracking-tight"}>
-        <Link href={`/blog/${post.slug}`} className="outline-none group-hover:text-primary focus-visible:rounded focus-visible:ring-2 focus-visible:ring-ring block w-fit">
-          <KineticText text={post.title} as="span" className="font-heading" />
-        </Link>
+        <Wobble scale={1.02}>
+          <Link href={`/blog/${post.slug}`} className="outline-none group-hover:text-primary focus-visible:rounded focus-visible:ring-2 focus-visible:ring-ring block w-fit">
+            <KineticText text={post.title} as="span" className="font-heading" />
+          </Link>
+        </Wobble>
       </h2>
       {post.excerpt ? (
         <p className="mt-3 max-w-2xl leading-7 text-muted-foreground">{post.excerpt}</p>
       ) : null}
       <div className="mt-5 flex flex-wrap gap-2.5 items-center">
         {post.tags.map((tag) => (
-          <Link key={tag.slug} href={`/blog?tag=${tag.slug}`} className="hover:opacity-85 transition-opacity">
-            <ComicText fontSize={0.75} className="rounded-md px-1.5 py-0.5 border shadow-sm">
-              {`#${tag.slug}`}
-            </ComicText>
-          </Link>
+          <Wobble key={tag.slug} scale={1.03}>
+            <Link href={`/blog?tag=${tag.slug}`} className="hover:opacity-85 transition-opacity">
+              <ComicText fontSize={0.75} className="rounded-md px-1.5 py-0.5 border shadow-sm">
+                {`#${tag.slug}`}
+              </ComicText>
+            </Link>
+          </Wobble>
         ))}
       </div>
     </article>

@@ -4,6 +4,7 @@ import { buttonVariants } from "@/components/ui/button"
 import { EmptyState } from "@/components/shared/empty-state"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { ProgressiveBlur } from "@/components/ui/progressive-blur"
+import { Wobble } from "@/components/ui/wobble"
 import { getPublishedPosts } from "@/lib/db/posts"
 import { siteConfig } from "@/lib/env"
 import { formatDate } from "@/lib/format"
@@ -47,16 +48,22 @@ export default async function HomePage() {
               Avoiding the obvious task.
             </p>
             <div className="mt-8 flex flex-col gap-2">
-              <Link href="/blog" className={cn(buttonVariants(), "w-fit")}>
-                Enter the archive <ArrowRight className="size-4" />
-              </Link>
-              <div className="flex flex-wrap gap-1.5">
-                <Link href="/search" className={buttonVariants({ variant: "ghost", size: "sm" })}>
-                  <Search className="size-4" /> Search
+              <Wobble scale={1.03}>
+                <Link href="/blog" className={cn(buttonVariants(), "w-fit")}>
+                  Enter the archive <ArrowRight className="size-4" />
                 </Link>
-                <Link href="/rss.xml" className={buttonVariants({ variant: "ghost", size: "sm" })}>
-                  <Rss className="size-4" /> RSS
-                </Link>
+              </Wobble>
+              <div className="flex flex-wrap gap-1.5 items-center">
+                <Wobble scale={1.02}>
+                  <Link href="/search" className={buttonVariants({ variant: "ghost", size: "sm" })}>
+                    <Search className="size-4" /> Search
+                  </Link>
+                </Wobble>
+                <Wobble scale={1.02}>
+                  <Link href="/rss.xml" className={buttonVariants({ variant: "ghost", size: "sm" })}>
+                    <Rss className="size-4" /> RSS
+                  </Link>
+                </Wobble>
               </div>
             </div>
           </aside>
@@ -73,9 +80,11 @@ export default async function HomePage() {
                   {formatDate(latestPost.publishedAt)}
                 </time>
                 <h2 className="mt-2 max-w-2xl font-heading text-2xl font-semibold tracking-tight sm:text-3xl">
-                  <Link href={`/blog/${latestPost.slug}`} className="outline-none hover:text-primary focus-visible:rounded focus-visible:ring-2 focus-visible:ring-ring">
-                    {latestPost.title}
-                  </Link>
+                  <Wobble scale={1.02}>
+                    <Link href={`/blog/${latestPost.slug}`} className="outline-none hover:text-primary focus-visible:rounded focus-visible:ring-2 focus-visible:ring-ring block w-fit">
+                      {latestPost.title}
+                    </Link>
+                  </Wobble>
                 </h2>
                 {latestPost.excerpt ? (
                   <p className="mt-3 max-w-2xl leading-7 text-muted-foreground">
@@ -83,9 +92,11 @@ export default async function HomePage() {
                   </p>
                 ) : null}
               </div>
-              <Link href={`/blog/${latestPost.slug}`} className="text-sm font-medium text-primary underline-offset-4 hover:underline">
-                Read it
-              </Link>
+              <Wobble scale={1.03}>
+                <Link href={`/blog/${latestPost.slug}`} className="text-sm font-medium text-primary underline-offset-4 hover:underline block w-fit">
+                  Read it
+                </Link>
+              </Wobble>
             </>
           ) : (
             <div className="md:col-span-2">

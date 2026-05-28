@@ -144,19 +144,28 @@ export function DynamicIslandTOC({
 
       setActiveId(currentActiveId)
 
-      // Calculate progress relative to the article content area instead of the full page height
-      // This guarantees the progress ring reaches 100% exactly when they finish reading, right before comments.
+      // Calculate progress relative to the exact height of the article content area.
+      // This is an extremely accurate, linear scroll tracker that begins on the first pixel
+      // scrolled and finishes exactly (100%) when the reader reaches the bottom of the text body.
       const articleEl = document.querySelector(".article-prose")
       if (articleEl) {
+        // Calculate total vertical space from page top to the bottom of the article container
         const rect = articleEl.getBoundingClientRect()
-        const articleHeight = rect.height
-        // The distance from the top of the article container to the top of the viewport
-        const scrolledDistance = Math.max(0, -rect.top)
-        // Adjust the viewport height so it hits 100% when reaching the very end of the text
-        const maxScrollable = articleHeight - window.innerHeight * 0.4
-        const percentage = maxScrollable > 0 
-          ? Math.min(100, Math.max(0, (scrolledDistance / maxScrollable) * 100))
+        const articleTop = rect.top + window.scrollY
+        const articleBottom = articleTop + rect.height
+
+        // Calculate scroll start (when article content first starts scrolling)
+        const scrollStart = Math.max(0, articleTop - window.innerHeight * 0.15)
+        // Calculate scroll end (when the bottom of the text matches the bottom of the viewport)
+        const scrollEnd = articleBottom - window.innerHeight
+
+        const currentScroll = window.scrollY
+        const totalScrollable = scrollEnd - scrollStart
+
+        const percentage = totalScrollable > 0
+          ? Math.min(100, Math.max(0, ((currentScroll - scrollStart) / totalScrollable) * 100))
           : 0
+
         setProgress(percentage)
       } else {
         const total = document.documentElement.scrollHeight - window.innerHeight

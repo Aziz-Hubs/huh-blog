@@ -2,8 +2,8 @@ import { Button as ButtonPrimitive } from "@base-ui/react/button"
 import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
-import { Wobble } from "./wobble"
-import type { WobbleProps } from "./wobble"
+import { Wobble } from "@/components/ui/wobble"
+import type { WobbleProps } from "@/components/ui/wobble"
 import { __config } from "./wobble.config"
 
 const buttonVariants = cva(
