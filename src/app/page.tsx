@@ -28,8 +28,6 @@ export default async function HomePage() {
         <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_320px]">
           <div>
             <h1 className="mt-8 max-w-4xl font-heading text-[clamp(4rem,13vw,10.5rem)] font-semibold leading-[0.82] tracking-[-0.075em] text-balance">
-              Zee,
-              <br />
               probably debugging.
             </h1>
             <p className="mt-8 max-w-xl text-lg leading-8 text-muted-foreground sm:text-xl">
