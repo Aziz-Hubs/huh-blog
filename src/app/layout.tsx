@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Noto_Serif } from "next/font/google"
 import { Providers } from "@/components/providers"
 import { SiteFooter } from "@/components/public/site-footer"
 import { SiteHeader } from "@/components/public/site-header"
+import { ProgressiveBlur } from "@/components/ui/progressive-blur"
 import { siteConfig } from "@/lib/env"
 import { cn } from "@/lib/utils"
 import "./globals.css"
@@ -46,10 +47,16 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     >
       <body className="min-h-full bg-background font-sans text-foreground">
         <Providers>
-          <div className="flex min-h-dvh flex-col">
+          <div className="relative flex min-h-dvh flex-col pb-16">
             <SiteHeader />
-            <main className="flex-1">{children}</main>
+            {/* Top progressive blur sticking right below the header */}
+            <div className="pointer-events-none sticky top-16 z-30 h-10 w-full overflow-hidden">
+              <ProgressiveBlur height="100%" position="top" />
+            </div>
+            <main className="flex-1 mt-[-40px]">{children}</main>
             <SiteFooter />
+            {/* Bottom progressive blur staying fixed at the bottom viewport edge */}
+            <ProgressiveBlur height="48px" position="bottom" className="fixed bottom-0 z-30 h-12" />
           </div>
         </Providers>
       </body>
