@@ -27,6 +27,8 @@ export function ArticleRenderer({ content }: { content: string }) {
   )
 }
 
+import { TextAnimate } from "@/components/ui/text-animate"
+
 export function ArticleHeader({ post }: { post: BlogPost }) {
   return (
     <header className="mx-auto max-w-3xl pt-12 sm:pt-16">
@@ -38,9 +40,17 @@ export function ArticleHeader({ post }: { post: BlogPost }) {
         ))}
       </div>
       <h1 className="mt-6 font-heading text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
-        {post.title}
+        <TextAnimate animation="blurInUp" by="word" once={true}>
+          {post.title}
+        </TextAnimate>
       </h1>
-      {post.excerpt ? <p className="mt-5 text-xl leading-8 text-muted-foreground">{post.excerpt}</p> : null}
+      {post.excerpt ? (
+        <div className="mt-5 text-xl leading-8 text-muted-foreground">
+          <TextAnimate animation="fadeIn" by="word" once={true} duration={0.4} delay={0.1}>
+            {post.excerpt}
+          </TextAnimate>
+        </div>
+      ) : null}
     </header>
   )
 }
