@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import React, { createContext, useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { AnimatePresence, motion, useMotionTemplate } from "motion/react"
 import { cn } from "@/lib/utils"
 
@@ -21,6 +21,10 @@ interface LensProps {
   ariaLabel?: string
   className?: string
 }
+
+// Context to let nested animated components (like TextAnimate) know they are inside
+// the duplicated magnifying lens overlay and should skip repeating their entrance animations.
+export const LensContext = createContext({ isInsideLens: false })
 
 export function Lens({
   children,
@@ -163,7 +167,10 @@ export function Lens({
               transformOrigin: `${x}px ${y}px`,
             }}
           >
-            {children}
+            {/* Set the context so child animations stay static in the overlay */}
+            <LensContext.Provider value={{ isInsideLens: true }}>
+              {children}
+            </LensContext.Provider>
           </div>
         </motion.div>
       </>
@@ -193,7 +200,9 @@ export function Lens({
       aria-label={ariaLabel}
       tabIndex={0}
     >
-      {children}
+      <LensContext.Provider value={{ isInsideLens: false }}>
+        {children}
+      </LensContext.Provider>
       {isStatic || defaultPosition ? (
         lensContent
       ) : (

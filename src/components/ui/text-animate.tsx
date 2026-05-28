@@ -1,6 +1,6 @@
 "use client"
 
-import { memo } from "react"
+import { memo, useContext } from "react"
 import {
   AnimatePresence,
   motion,
@@ -10,6 +10,7 @@ import {
 } from "motion/react"
 
 import { cn } from "@/lib/utils"
+import { LensContext } from "@/components/ui/lens"
 
 type AnimationType = "text" | "word" | "character" | "line"
 type AnimationVariant =
@@ -343,7 +344,18 @@ const TextAnimateBase = ({
   accessible = true,
   ...props
 }: TextAnimateProps) => {
+  const { isInsideLens } = useContext(LensContext)
   const MotionComponent = motionElements[Component]
+
+  // If we are inside the duplicated magnifying lens overlay, render static text 
+  // immediately to prevent repeating entrance animations while hovering.
+  if (isInsideLens) {
+    return (
+      <Component className={cn("whitespace-pre-wrap", className)} {...(props as Record<string, unknown>)}>
+        {children}
+      </Component>
+    )
+  }
 
   let segments: string[] = []
   switch (by) {

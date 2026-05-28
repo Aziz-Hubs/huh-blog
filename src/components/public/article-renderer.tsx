@@ -1,13 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link"
-import React from "react"
+import React, { useMemo } from "react"
 import ReactMarkdown, { type Components } from "react-markdown"
 import rehypeSanitize from "rehype-sanitize"
 import remarkGfm from "remark-gfm"
 import { ComicText } from "@/components/ui/comic-text"
 import { KineticText } from "@/components/ui/kinetic-text"
 import { TextAnimate } from "@/components/ui/text-animate"
-import Wobble from "@/components/ui/wobble"
+import { Wobble } from "@/components/ui/wobble"
 import type { BlogPost } from "@/lib/types"
 
 // Helper: convert React children to a plain string for TextAnimate
@@ -29,75 +29,94 @@ function childrenToString(children: React.ReactNode): string {
   return ""
 }
 
-const components: Components = {
-  a: ({ href, children, ...props }) => {
-    const isExternal = href?.startsWith("http")
-    if (!href) return <a {...props}>{children}</a>
-    if (isExternal) {
-      return <a href={href} rel="noopener noreferrer" target="_blank" {...props}>{children}</a>
-    }
-    return <Link href={href}>{children}</Link>
-  },
-  img: ({ alt, ...props }) => <img alt={alt ?? "Post image"} loading="lazy" {...props} />,
-  p: ({ children }) => {
-    const text = childrenToString(children)
-    if (!text.trim()) return <p>{children}</p>
-    return (
-      <TextAnimate as="p" animation="fadeIn" by="word" once startOnView={false} duration={0.5}>
-        {text}
-      </TextAnimate>
-    )
-  },
-  h1: ({ children }) => {
-    const text = childrenToString(children)
-    return (
-      <TextAnimate as="h1" animation="blurInUp" by="word" once startOnView={false} duration={0.45}>
-        {text}
-      </TextAnimate>
-    )
-  },
-  h2: ({ children }) => {
-    const text = childrenToString(children)
-    return (
-      <TextAnimate as="h2" animation="blurInUp" by="word" once startOnView={false} duration={0.45}>
-        {text}
-      </TextAnimate>
-    )
-  },
-  h3: ({ children }) => {
-    const text = childrenToString(children)
-    return (
-      <TextAnimate as="h3" animation="blurInUp" by="word" once startOnView={false} duration={0.45}>
-        {text}
-      </TextAnimate>
-    )
-  },
-  li: ({ children }) => {
-    const text = childrenToString(children)
-    if (!text.trim()) return <li>{children}</li>
-    return (
-      <TextAnimate as="li" animation="fadeIn" by="word" once startOnView={false} duration={0.45}>
-        {text}
-      </TextAnimate>
-    )
-  },
-  blockquote: ({ children }) => {
-    const text = childrenToString(children)
-    if (!text.trim()) return <blockquote>{children}</blockquote>
-    return (
-      <blockquote>
-        <TextAnimate as="p" animation="blurIn" by="word" once startOnView={false} duration={0.55}>
+// Generate components map with incrementally increasing stagger delays per paragraph/heading index
+function createMarkdownComponents(staggerCounter: { count: number }): Components {
+  return {
+    a: ({ href, children, ...props }) => {
+      const isExternal = href?.startsWith("http")
+      if (!href) return <a {...props}>{children}</a>
+      if (isExternal) {
+        return <a href={href} rel="noopener noreferrer" target="_blank" {...props}>{children}</a>
+      }
+      return <Link href={href}>{children}</Link>
+    },
+    img: ({ alt, ...props }) => <img alt={alt ?? "Post image"} loading="lazy" {...props} />,
+    p: ({ children }) => {
+      const text = childrenToString(children)
+      if (!text.trim()) return <p>{children}</p>
+      const delay = staggerCounter.count * 0.08
+      staggerCounter.count++
+      return (
+        <TextAnimate as="p" animation="fadeIn" by="word" once startOnView={false} duration={0.5} delay={delay}>
           {text}
         </TextAnimate>
-      </blockquote>
-    )
-  },
+      )
+    },
+    h1: ({ children }) => {
+      const text = childrenToString(children)
+      const delay = staggerCounter.count * 0.08
+      staggerCounter.count++
+      return (
+        <TextAnimate as="h1" animation="blurInUp" by="word" once startOnView={false} duration={0.45} delay={delay}>
+          {text}
+        </TextAnimate>
+      )
+    },
+    h2: ({ children }) => {
+      const text = childrenToString(children)
+      const delay = staggerCounter.count * 0.08
+      staggerCounter.count++
+      return (
+        <TextAnimate as="h2" animation="blurInUp" by="word" once startOnView={false} duration={0.45} delay={delay}>
+          {text}
+        </TextAnimate>
+      )
+    },
+    h3: ({ children }) => {
+      const text = childrenToString(children)
+      const delay = staggerCounter.count * 0.08
+      staggerCounter.count++
+      return (
+        <TextAnimate as="h3" animation="blurInUp" by="word" once startOnView={false} duration={0.45} delay={delay}>
+          {text}
+        </TextAnimate>
+      )
+    },
+    li: ({ children }) => {
+      const text = childrenToString(children)
+      if (!text.trim()) return <li>{children}</li>
+      const delay = staggerCounter.count * 0.08
+      staggerCounter.count++
+      return (
+        <TextAnimate as="li" animation="fadeIn" by="word" once startOnView={false} duration={0.45} delay={delay}>
+          {text}
+        </TextAnimate>
+      )
+    },
+    blockquote: ({ children }) => {
+      const text = childrenToString(children)
+      if (!text.trim()) return <blockquote>{children}</blockquote>
+      const delay = staggerCounter.count * 0.08
+      staggerCounter.count++
+      return (
+        <blockquote>
+          <TextAnimate as="p" animation="blurIn" by="word" once startOnView={false} duration={0.55} delay={delay}>
+            {text}
+          </TextAnimate>
+        </blockquote>
+      )
+    },
+  }
 }
 
 export function ArticleRenderer({ content }: { content: string }) {
+  // Clear and initialize a fresh counter per render pass to guarantee strict static incremental offsets
+  const staggerCounter = useMemo(() => ({ count: 0 }), [])
+  const customComponents = useMemo(() => createMarkdownComponents(staggerCounter), [staggerCounter])
+
   return (
     <div className="article-prose">
-      <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeSanitize]} components={components}>
+      <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeSanitize]} components={customComponents}>
         {content}
       </ReactMarkdown>
     </div>

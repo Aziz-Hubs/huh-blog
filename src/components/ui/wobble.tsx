@@ -33,7 +33,7 @@ interface Position {
 
 const MAX_MOVEMENT_PIXELS = { x: 1, y: 1 } as const
 
-export default function Wobble({ children, className, scale = 1.01, off = false }: WobbleProps) {
+export function Wobble({ children, className, scale = 1.01, off = false }: WobbleProps) {
   const [movement, setMovement] = useState<Position>({ x: 0, y: 0 })
   const [isHovering, setIsHovering] = useState(false)
 
@@ -116,5 +116,3 @@ export default function Wobble({ children, className, scale = 1.01, off = false 
 }
 
 Wobble.displayName = "Wobble"
-
-export { Wobble }
