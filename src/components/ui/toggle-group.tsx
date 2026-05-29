@@ -7,7 +7,6 @@ import { type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
 import { toggleVariants } from "@/components/ui/toggle"
-import { Wobble } from "@/components/ui/wobble"
 
 const ToggleGroupContext = React.createContext<
   VariantProps<typeof toggleVariants> & {
@@ -48,12 +47,18 @@ function ToggleGroup({
       )}
       {...props}
     >
-      <ToggleGroupContext.Provider
-        value={{ variant, size, spacing, orientation }}
-      >
+      <SidebarContextWrapper value={{ variant, size, spacing, orientation }}>
         {children}
-      </ToggleGroupContext.Provider>
+      </SidebarContextWrapper>
     </ToggleGroupPrimitive>
+  )
+}
+
+function SidebarContextWrapper({ value, children }: { value: Record<string, unknown>; children: React.ReactNode }) {
+  return (
+    <ToggleGroupContext.Provider value={value}>
+      {children}
+    </ToggleGroupContext.Provider>
   )
 }
 
@@ -62,14 +67,11 @@ function ToggleGroupItem({
   children,
   variant = "default",
   size = "default",
-  wobble = true,
   ...props
-}: TogglePrimitive.Props & VariantProps<typeof toggleVariants> & {
-  wobble?: boolean
-}) {
+}: TogglePrimitive.Props & VariantProps<typeof toggleVariants>) {
   const context = React.useContext(ToggleGroupContext)
 
-  const comp = (
+  return (
     <TogglePrimitive
       data-slot="toggle-group-item"
       data-variant={context.variant || variant}
@@ -88,12 +90,6 @@ function ToggleGroupItem({
       {children}
     </TogglePrimitive>
   )
-
-  if (wobble) {
-    return <Wobble>{comp}</Wobble>
-  }
-
-  return comp
 }
 
 export { ToggleGroup, ToggleGroupItem }

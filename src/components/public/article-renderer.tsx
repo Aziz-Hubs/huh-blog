@@ -131,9 +131,9 @@ function getTagStickerStyles(name: string, index: number) {
     hash = name.charCodeAt(i) + ((hash << 5) - hash)
   }
 
-  // Calculate coordinates bounded near the top right of the header container
-  const seedX = Math.abs((hash + index * 31) % 25) // 0% to 25% horizontal offset
-  const seedY = Math.abs((hash + index * 47) % 20) // 0px to 20px vertical offset
+  // Calculate coordinates bounded inside our dedicated relative sticker board box
+  const seedX = Math.abs((hash + index * 31) % 60) // 0% to 60% horizontal offset
+  const seedY = Math.abs((hash + index * 47) % 35) + 12 // 12px to 47px vertical offset
   const rotation = ((hash + index * 17) % 24) - 12 // -12 to 12 deg tilt
 
   // Distinct comic book color palette
@@ -149,7 +149,7 @@ function getTagStickerStyles(name: string, index: number) {
 
   return {
     style: {
-      right: `${seedX}%`,
+      left: `${seedX}%`,
       top: `${seedY}px`,
       transform: `rotate(${rotation}deg)`,
     },
@@ -160,44 +160,49 @@ function getTagStickerStyles(name: string, index: number) {
 
 export function ArticleHeader({ post }: { post: BlogPost }) {
   return (
-    <header className="mx-auto max-w-3xl pt-16 sm:pt-20 relative min-h-[160px]">
-      {/* Cartoon Sticker Board Layer */}
-      <div className="absolute right-0 top-0 h-16 w-1/2 hidden md:block">
-        {post.tags.map((tag, index) => {
-          const sticker = getTagStickerStyles(tag.name, index)
-          return (
-            <div
-              key={tag.slug}
-              className="absolute select-none pointer-events-auto transition-transform hover:scale-105 hover:z-20 active:scale-95"
-              style={sticker.style}
-            >
-              <Wobble scale={1.04}>
-                <Link href={`/blog?tag=${tag.slug}`} className="block">
-                  {/* Thick solid border-less cartoon badge mimicking die-cut vinyl stickers */}
-                  <div 
-                    className="rounded-2xl p-2.5 py-1.5 shadow-[4px_4px_0px_#000000] hover:shadow-[6px_6px_0px_#000000] active:shadow-[2px_2px_0px_#000000] transition-shadow"
-                    style={{ backgroundColor: sticker.bg }}
-                  >
-                    <ComicText 
-                      fontSize={1.1} 
-                      className="leading-none"
-                      style={{
-                        backgroundColor: sticker.bg,
-                        backgroundImage: `radial-gradient(circle at 1px 1px, ${sticker.dot} 1px, transparent 0)`,
-                        textShadow: "none",
-                        filter: "drop-shadow(2px 2px 0px #000000)",
-                        WebkitTextStroke: "0.33px #000000",
-                      }}
+    <header className="mx-auto max-w-3xl pt-12 sm:pt-16">
+      {/* Cartoon Sticker Board Sheet Box - Strictly defining the relative borders where the stickers live */}
+      {post.tags.length > 0 ? (
+        <div className="relative border-2 border-dashed border-foreground/10 bg-muted/15 rounded-3xl min-h-[96px] p-4 px-6 mb-8 overflow-hidden select-none hidden md:block">
+          <p className="absolute bottom-2 right-4 font-mono text-[9px] uppercase tracking-widest text-muted-foreground/50 pointer-events-none">
+            Sticker Board
+          </p>
+          {post.tags.map((tag, index) => {
+            const sticker = getTagStickerStyles(tag.name, index)
+            return (
+              <div
+                key={tag.slug}
+                className="absolute select-none pointer-events-auto transition-transform hover:scale-105 hover:z-20 active:scale-95"
+                style={sticker.style}
+              >
+                <Wobble scale={1.04}>
+                  <Link href={`/blog?tag=${tag.slug}`} className="block">
+                    {/* Borderless flat comic decal box with heavy drop shadow */}
+                    <div 
+                      className="rounded-2xl p-2 py-1 shadow-[4px_4px_0px_#000000] hover:shadow-[5px_5px_0px_#000000] active:shadow-[2px_2px_0px_#000000] transition-shadow border-none"
+                      style={{ backgroundColor: sticker.bg }}
                     >
-                      {tag.name}
-                    </ComicText>
-                  </div>
-                </Link>
-              </Wobble>
-            </div>
-          )
-        })}
-      </div>
+                      <ComicText 
+                        fontSize={0.9} 
+                        className="leading-none"
+                        style={{
+                          backgroundColor: sticker.bg,
+                          backgroundImage: `radial-gradient(circle at 1px 1px, ${sticker.dot} 1px, transparent 0)`,
+                          textShadow: "none",
+                          filter: "drop-shadow(2px 2px 0px #000000)",
+                          WebkitTextStroke: "0.22px #000000",
+                        }}
+                      >
+                        {tag.name}
+                      </ComicText>
+                    </div>
+                  </Link>
+                </Wobble>
+              </div>
+            )
+          })}
+        </div>
+      ) : null}
 
       {/* Mobile/Small Screen Fallback (inline comic-tags inline grid row) */}
       <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground md:hidden mb-6">

@@ -2,7 +2,6 @@
 
 import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
-import { ComicText } from "@/components/ui/comic-text"
 import { KineticText } from "@/components/ui/kinetic-text"
 import { Wobble } from "@/components/ui/wobble"
 import { formatDate } from "@/lib/format"
@@ -28,13 +27,13 @@ export function PostCard({ post, featured = false }: { post: BlogPost; featured?
       {post.excerpt ? (
         <p className="mt-3 max-w-2xl leading-7 text-muted-foreground">{post.excerpt}</p>
       ) : null}
-      <div className="mt-5 flex flex-wrap gap-2.5 items-center">
+      <div className="mt-5 flex flex-wrap gap-2 items-center">
         {post.tags.map((tag) => (
           <Wobble key={tag.slug} scale={1.03}>
-            <Link href={`/blog?tag=${tag.slug}`} className="hover:opacity-85 transition-opacity">
-              <ComicText fontSize={0.75} className="rounded-md px-1.5 py-0.5 border shadow-sm">
-                {`#${tag.slug}`}
-              </ComicText>
+            <Link href={`/blog?tag=${tag.slug}`}>
+              <Badge variant="secondary" className="px-2 py-0.5 text-xs hover:bg-muted">
+                #{tag.name}
+              </Badge>
             </Link>
           </Wobble>
         ))}

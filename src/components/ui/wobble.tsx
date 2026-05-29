@@ -88,23 +88,23 @@ export function Wobble({ children, className, scale = 1.01, off = false }: Wobbl
   // Map intent scale to applied inverse scale
   const appliedScale = 1 - (scale - 1)
 
-  // Inline CSS variable bindings
-  const wobbleStyles: CSSProperties = {
-    ...children?.props?.style,
-    "--wobble-x": isHovering ? `${movement.x}px` : "0px",
-    "--wobble-y": isHovering ? `${movement.y}px` : "0px",
-    "--scale": `${appliedScale}`,
-  } as CSSProperties
+    // Inline CSS variable bindings with inline transform overrides to ensure 100% robust wobble jiggling on all elements
+    const wobbleStyles: CSSProperties = {
+      ...children?.props?.style,
+      transform: isHovering
+        ? `translate(var(--wobble-x, 0px), var(--wobble-y, 0px)) scale(var(--scale, 1))`
+        : `translate(0px, 0px) scale(1)`,
+      "--wobble-x": isHovering ? `${movement.x}px` : "0px",
+      "--wobble-y": isHovering ? `${movement.y}px` : "0px",
+      "--scale": `${appliedScale}`,
+    } as CSSProperties
 
-  // Tailwind classes mapping dynamically computed wobble states
-  const wobbleClasses = cn(
-    "translate-x-(--wobble-x) translate-y-(--wobble-y)",
-    "hover:scale-(--scale)",
-    "active:hover:scale-[calc(var(--scale)-0.02)]",
-    "transition-all ease-out duration-200",
-    className,
-    childClassName
-  )
+    // Tailwind classes mapping transition properties
+    const wobbleClasses = cn(
+      "transition-all ease-out duration-200",
+      className,
+      childClassName
+    )
 
   return cloneElement(children, {
     onMouseMove: handleMouseMove,

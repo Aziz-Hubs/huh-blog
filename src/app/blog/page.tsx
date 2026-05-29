@@ -1,9 +1,8 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { PostList } from "@/components/public/post-list"
-import { ComicText } from "@/components/ui/comic-text"
+import { Badge } from "@/components/ui/badge"
 import { getPublishedPosts, getTags } from "@/lib/db/posts"
-import { cn } from "@/lib/utils"
 
 export const metadata: Metadata = {
   title: "Blog",
@@ -21,13 +20,13 @@ export default async function BlogIndexPage({ searchParams }: { searchParams: Pr
         <h1 className="mt-4 font-heading text-4xl font-semibold tracking-tight sm:text-5xl">Published posts</h1>
         <p className="mt-4 text-lg leading-8 text-muted-foreground">Every public note, sorted with the newest writing first. Drafts and scheduled posts stay hidden by the database view.</p>
       </header>
-      <div className="mt-8 flex flex-wrap items-center gap-2.5 text-sm">
+      <div className="mt-8 flex flex-wrap items-center gap-2 text-sm">
         <Link href="/blog" className={!tag ? "rounded-full bg-primary px-3 py-1 text-primary-foreground leading-none" : "rounded-full border px-3 py-1 text-muted-foreground hover:text-foreground leading-none"}>All</Link>
         {tags.map((item) => (
           <Link key={item.slug} href={`/blog?tag=${item.slug}`} className="hover:opacity-85 transition-opacity">
-            <ComicText fontSize={0.8} className={cn("rounded-md px-2 py-0.5 border shadow-sm", tag === item.slug && "ring-2 ring-primary")}>
-              {item.name}
-            </ComicText>
+            <Badge variant={tag === item.slug ? "default" : "secondary"} className="px-2 py-0.5 text-xs hover:bg-muted">
+              #{item.name}
+            </Badge>
           </Link>
         ))}
       </div>

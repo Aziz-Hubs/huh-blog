@@ -1,20 +1,16 @@
 "use client"
 
 import { Switch as SwitchPrimitive } from "@base-ui/react/switch"
-
 import { cn } from "@/lib/utils"
-import { Wobble } from "@/components/ui/wobble"
 
 function Switch({
   className,
   size = "default",
-  wobble = true,
   ...props
 }: SwitchPrimitive.Root.Props & {
   size?: "sm" | "default"
-  wobble?: boolean
 }) {
-  const comp = (
+  return (
     <SwitchPrimitive.Root
       data-slot="switch"
       data-size={size}
@@ -30,12 +26,6 @@ function Switch({
       />
     </SwitchPrimitive.Root>
   )
-
-  if (wobble) {
-    return <Wobble scale={1.05}>{comp}</Wobble>
-  }
-
-  return comp
 }
 
 export { Switch }
