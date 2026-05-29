@@ -29,10 +29,10 @@ export default function WobbleDemoPage() {
       <section className="space-y-6">
         <h2 className="font-heading text-2xl font-semibold border-b pb-2">Buttons</h2>
         <div className="flex flex-wrap gap-4 items-center">
-          <Button wobbleProps={{ scale: 1.01 }}>Default button (1.01)</Button>
-          <Button wobble={false}>Wobble disabled (wobble=false)</Button>
-          <Button wobbleProps={{ scale: 1.05 }} variant="outline">Scale 1.05 button</Button>
-          <Button wobbleProps={{ scale: 1.08 }} variant="secondary">Scale 1.08 secondary</Button>
+          <Wobble scale={1.01}><Button>Default button (1.01)</Button></Wobble>
+          <Button>Wobble disabled (plain button)</Button>
+          <Wobble scale={1.05}><Button variant="outline">Scale 1.05 button</Button></Wobble>
+          <Wobble scale={1.08}><Button variant="secondary">Scale 1.08 secondary</Button></Wobble>
         </div>
       </section>
 
