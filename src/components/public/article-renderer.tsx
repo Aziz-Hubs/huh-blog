@@ -131,9 +131,9 @@ function getTagStickerStyles(name: string, index: number) {
     hash = name.charCodeAt(i) + ((hash << 5) - hash)
   }
 
-  // Calculate coordinates bounded inside our dedicated relative sticker board box
-  const seedX = Math.abs((hash + index * 31) % 60) // 0% to 60% horizontal offset
-  const seedY = Math.abs((hash + index * 47) % 35) + 12 // 12px to 47px vertical offset
+  // Spread stickers organically across the entire width and height of the relative board container
+  const seedX = Math.abs((hash + index * 31) % 75) + 5 // 5% to 80% horizontal offset
+  const seedY = Math.abs((hash + index * 47) % 30) + 12 // 12px to 42px vertical offset
   const rotation = ((hash + index * 17) % 24) - 12 // -12 to 12 deg tilt
 
   // Distinct comic book color palette
@@ -162,9 +162,10 @@ export function ArticleHeader({ post }: { post: BlogPost }) {
   return (
     <header className="mx-auto max-w-3xl pt-12 sm:pt-16">
       {/* Cartoon Sticker Board Sheet Box - Strictly defining the relative borders where the stickers live */}
+      {/* Standardized to transparent background while keeping the borders & dimensions exactly the same */}
       {post.tags.length > 0 ? (
-        <div className="relative border-2 border-dashed border-foreground/10 bg-muted/15 rounded-3xl min-h-[96px] p-4 px-6 mb-8 overflow-hidden select-none hidden md:block">
-          <p className="absolute bottom-2 right-4 font-mono text-[9px] uppercase tracking-widest text-muted-foreground/50 pointer-events-none">
+        <div className="relative border-2 border-dashed border-foreground/10 bg-transparent rounded-3xl min-h-[96px] p-4 px-6 mb-8 overflow-hidden select-none hidden md:block">
+          <p className="absolute bottom-2 right-4 font-mono text-[9px] uppercase tracking-widest text-muted-foreground/30 pointer-events-none">
             Sticker Board
           </p>
           {post.tags.map((tag, index) => {
@@ -233,9 +234,13 @@ export function ArticleHeader({ post }: { post: BlogPost }) {
         })}
       </div>
 
-      <h1 className="mt-4 font-heading text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
-        <KineticText text={post.title} as="span" className="font-heading" />
-      </h1>
+      {/* Title header block centered vertically inside its own relative container wrapping both stickers and title, keeping them vertically in the middle */}
+      <div className="relative flex flex-col justify-center min-h-[140px] mt-4 mb-4">
+        <h1 className="font-heading text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
+          <KineticText text={post.title} as="span" className="font-heading" />
+        </h1>
+      </div>
+      
       {post.excerpt ? (
         <p className="mt-5 text-xl leading-8 text-muted-foreground">{post.excerpt}</p>
       ) : null}
